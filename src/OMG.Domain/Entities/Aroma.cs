@@ -1,6 +1,8 @@
-﻿namespace OMG.Domain.Entities;
+﻿using OMG.Domain.Base;
 
-public class Aroma
+namespace OMG.Domain.Entities;
+
+public class Aroma : Entity
 {
     public string Nome { get; set; } = string.Empty;
 }

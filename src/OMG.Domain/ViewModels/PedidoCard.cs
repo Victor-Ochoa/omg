@@ -2,7 +2,7 @@
 {
     public class PedidoCard
     {
-        public int ProdutoId { get; set; }
+        public int PedidoId { get; set; }
         public string NomeCliente { get; set; } = string.Empty;
         public int TotalItens { get; set; }
         public DateOnly DataEntrega { get; set; }= new DateOnly();

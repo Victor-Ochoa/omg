@@ -1,6 +1,8 @@
-﻿namespace OMG.Domain.Entities;
+﻿using OMG.Domain.Base;
 
-public class Formato
+namespace OMG.Domain.Entities;
+
+public class Formato : Entity
 {
     public string Descricao { get; set; } = string.Empty;
 }

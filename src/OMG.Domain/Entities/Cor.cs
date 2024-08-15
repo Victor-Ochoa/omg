@@ -1,6 +1,8 @@
-﻿namespace OMG.Domain.Entities;
+﻿using OMG.Domain.Base;
 
-public  class Cor
+namespace OMG.Domain.Entities;
+
+public  class Cor : Entity
 {
     public string Nome { get; set; } = string.Empty;
 }

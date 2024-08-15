@@ -13,6 +13,5 @@ namespace OMG.Domain.ViewModels
         public string Produto { get; set; } = string.Empty;
         public string Formato { get; set; } = string.Empty;
         public string Cor { get; set; } = string.Empty;
-        public string MyProperty { get; set; } = string.Empty;
     }
 }

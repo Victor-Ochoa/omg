@@ -1,6 +1,8 @@
-﻿namespace OMG.Domain.Entities;
+﻿using OMG.Domain.Base;
 
-public class PedidoItem
+namespace OMG.Domain.Entities;
+
+public class PedidoItem : Entity
 {
     public int PedidoId { get; set; }
     public required Pedido Pedido { get; set; }
@@ -9,4 +11,6 @@ public class PedidoItem
     public required Formato Formato { get; set; }
     public required Cor Cor { get; set; }
     public required Aroma Aroma { get; set; }
+
+    public int Quantidade { get; set; }
 }

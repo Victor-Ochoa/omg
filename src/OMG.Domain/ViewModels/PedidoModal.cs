@@ -11,5 +11,6 @@
         public float ValorPago { get; set; }
         public float ValorReceber { get; set; }
         public bool Permuta { get; set; } = false;
+        public DateOnly DataEntrega { get; set; }
     }
 }
