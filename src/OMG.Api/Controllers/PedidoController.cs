@@ -10,38 +10,38 @@ namespace OMG.Api.Controllers
     {
         // GET: api/<PedidoController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(new string[] { "value1", "value2" });
         }
 
         // GET api/<PedidoController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            return Ok("value");
         }
 
         // POST api/<PedidoController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] string value)
         {
-            //201
-            return Created();
+            var id = 1;
+            return Created($"/api/Pedido/{id}", "value");
         }
 
         // PUT api/<PedidoController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(int id, [FromBody] string value)
         {
-            //204
+            return NoContent();
         }
 
         // DELETE api/<PedidoController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            //204
+            return NoContent();
         }
     }
 }
