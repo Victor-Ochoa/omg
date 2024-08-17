@@ -12,47 +12,47 @@ namespace OMG.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CorController : ControllerBase
+    public class FormatoController : ControllerBase
     {
         private readonly OMGDbContext _context;
 
-        public CorController(OMGDbContext context)
+        public FormatoController(OMGDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Cor
+        // GET: api/Formato
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cor>>> GetCores()
+        public async Task<ActionResult<IEnumerable<Formato>>> GetFormatos()
         {
-            return await _context.Cores.ToListAsync();
+            return await _context.Formatos.ToListAsync();
         }
 
-        // GET: api/Cor/5
+        // GET: api/Formato/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cor>> GetCor(int id)
+        public async Task<ActionResult<Formato>> GetFormato(int id)
         {
-            var cor = await _context.Cores.FindAsync(id);
+            var formato = await _context.Formatos.FindAsync(id);
 
-            if (cor == null)
+            if (formato == null)
             {
                 return NotFound();
             }
 
-            return cor;
+            return formato;
         }
 
-        // PUT: api/Cor/5
+        // PUT: api/Formato/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCor(int id, Cor cor)
+        public async Task<IActionResult> PutFormato(int id, Formato formato)
         {
-            if (id != cor.Id)
+            if (id != formato.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(cor).State = EntityState.Modified;
+            _context.Entry(formato).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace OMG.Api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CorExists(id))
+                if (!FormatoExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace OMG.Api.Controllers
             return NoContent();
         }
 
-        // POST: api/Cor
+        // POST: api/Formato
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Cor>> PostCor(Cor cor)
+        public async Task<ActionResult<Formato>> PostFormato(Formato formato)
         {
-            _context.Cores.Add(cor);
+            _context.Formatos.Add(formato);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCor", new { id = cor.Id }, cor);
+            return CreatedAtAction("GetFormato", new { id = formato.Id }, formato);
         }
 
-        // DELETE: api/Cor/5
+        // DELETE: api/Formato/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCor(int id)
+        public async Task<IActionResult> DeleteFormato(int id)
         {
-            var cor = await _context.Cores.FindAsync(id);
-            if (cor == null)
+            var formato = await _context.Formatos.FindAsync(id);
+            if (formato == null)
             {
                 return NotFound();
             }
 
-            _context.Cores.Remove(cor);
+            _context.Formatos.Remove(formato);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool CorExists(int id)
+        private bool FormatoExists(int id)
         {
-            return _context.Cores.Any(e => e.Id == id);
+            return _context.Formatos.Any(e => e.Id == id);
         }
     }
 }

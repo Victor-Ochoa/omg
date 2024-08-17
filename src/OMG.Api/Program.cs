@@ -15,7 +15,7 @@ public class Program
         builder.Services.AddControllers();
 
         builder.Services.AddDbContext<OMGDbContext>(option => {
-            option.UseSqlServer();
+            option.UseSqlServer(builder.Configuration.GetConnectionString("OMGdbConnection"));
         });
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

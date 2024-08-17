@@ -12,47 +12,47 @@ namespace OMG.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CorController : ControllerBase
+    public class AromaController : ControllerBase
     {
         private readonly OMGDbContext _context;
 
-        public CorController(OMGDbContext context)
+        public AromaController(OMGDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Cor
+        // GET: api/Aroma
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cor>>> GetCores()
+        public async Task<ActionResult<IEnumerable<Aroma>>> GetAromas()
         {
-            return await _context.Cores.ToListAsync();
+            return await _context.Aromas.ToListAsync();
         }
 
-        // GET: api/Cor/5
+        // GET: api/Aroma/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cor>> GetCor(int id)
+        public async Task<ActionResult<Aroma>> GetAroma(int id)
         {
-            var cor = await _context.Cores.FindAsync(id);
+            var aroma = await _context.Aromas.FindAsync(id);
 
-            if (cor == null)
+            if (aroma == null)
             {
                 return NotFound();
             }
 
-            return cor;
+            return aroma;
         }
 
-        // PUT: api/Cor/5
+        // PUT: api/Aroma/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCor(int id, Cor cor)
+        public async Task<IActionResult> PutAroma(int id, Aroma aroma)
         {
-            if (id != cor.Id)
+            if (id != aroma.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(cor).State = EntityState.Modified;
+            _context.Entry(aroma).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace OMG.Api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CorExists(id))
+                if (!AromaExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace OMG.Api.Controllers
             return NoContent();
         }
 
-        // POST: api/Cor
+        // POST: api/Aroma
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Cor>> PostCor(Cor cor)
+        public async Task<ActionResult<Aroma>> PostAroma(Aroma aroma)
         {
-            _context.Cores.Add(cor);
+            _context.Aromas.Add(aroma);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCor", new { id = cor.Id }, cor);
+            return CreatedAtAction("GetAroma", new { id = aroma.Id }, aroma);
         }
 
-        // DELETE: api/Cor/5
+        // DELETE: api/Aroma/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCor(int id)
+        public async Task<IActionResult> DeleteAroma(int id)
         {
-            var cor = await _context.Cores.FindAsync(id);
-            if (cor == null)
+            var aroma = await _context.Aromas.FindAsync(id);
+            if (aroma == null)
             {
                 return NotFound();
             }
 
-            _context.Cores.Remove(cor);
+            _context.Aromas.Remove(aroma);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool CorExists(int id)
+        private bool AromaExists(int id)
         {
-            return _context.Cores.Any(e => e.Id == id);
+            return _context.Aromas.Any(e => e.Id == id);
         }
     }
 }

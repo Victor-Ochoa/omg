@@ -12,47 +12,47 @@ namespace OMG.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CorController : ControllerBase
+    public class ClienteController : ControllerBase
     {
         private readonly OMGDbContext _context;
 
-        public CorController(OMGDbContext context)
+        public ClienteController(OMGDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Cor
+        // GET: api/Cliente
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cor>>> GetCores()
+        public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
-            return await _context.Cores.ToListAsync();
+            return await _context.Clientes.ToListAsync();
         }
 
-        // GET: api/Cor/5
+        // GET: api/Cliente/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cor>> GetCor(int id)
+        public async Task<ActionResult<Cliente>> GetCliente(int id)
         {
-            var cor = await _context.Cores.FindAsync(id);
+            var cliente = await _context.Clientes.FindAsync(id);
 
-            if (cor == null)
+            if (cliente == null)
             {
                 return NotFound();
             }
 
-            return cor;
+            return cliente;
         }
 
-        // PUT: api/Cor/5
+        // PUT: api/Cliente/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCor(int id, Cor cor)
+        public async Task<IActionResult> PutCliente(int id, Cliente cliente)
         {
-            if (id != cor.Id)
+            if (id != cliente.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(cor).State = EntityState.Modified;
+            _context.Entry(cliente).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace OMG.Api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CorExists(id))
+                if (!ClienteExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace OMG.Api.Controllers
             return NoContent();
         }
 
-        // POST: api/Cor
+        // POST: api/Cliente
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Cor>> PostCor(Cor cor)
+        public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
         {
-            _context.Cores.Add(cor);
+            _context.Clientes.Add(cliente);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCor", new { id = cor.Id }, cor);
+            return CreatedAtAction("GetCliente", new { id = cliente.Id }, cliente);
         }
 
-        // DELETE: api/Cor/5
+        // DELETE: api/Cliente/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCor(int id)
+        public async Task<IActionResult> DeleteCliente(int id)
         {
-            var cor = await _context.Cores.FindAsync(id);
-            if (cor == null)
+            var cliente = await _context.Clientes.FindAsync(id);
+            if (cliente == null)
             {
                 return NotFound();
             }
 
-            _context.Cores.Remove(cor);
+            _context.Clientes.Remove(cliente);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool CorExists(int id)
+        private bool ClienteExists(int id)
         {
-            return _context.Cores.Any(e => e.Id == id);
+            return _context.Clientes.Any(e => e.Id == id);
         }
     }
 }

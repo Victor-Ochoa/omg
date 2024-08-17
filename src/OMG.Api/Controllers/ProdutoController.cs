@@ -12,47 +12,47 @@ namespace OMG.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CorController : ControllerBase
+    public class ProdutoController : ControllerBase
     {
         private readonly OMGDbContext _context;
 
-        public CorController(OMGDbContext context)
+        public ProdutoController(OMGDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Cor
+        // GET: api/Produto
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cor>>> GetCores()
+        public async Task<ActionResult<IEnumerable<Produto>>> GetProdutos()
         {
-            return await _context.Cores.ToListAsync();
+            return await _context.Produtos.ToListAsync();
         }
 
-        // GET: api/Cor/5
+        // GET: api/Produto/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cor>> GetCor(int id)
+        public async Task<ActionResult<Produto>> GetProduto(int id)
         {
-            var cor = await _context.Cores.FindAsync(id);
+            var produto = await _context.Produtos.FindAsync(id);
 
-            if (cor == null)
+            if (produto == null)
             {
                 return NotFound();
             }
 
-            return cor;
+            return produto;
         }
 
-        // PUT: api/Cor/5
+        // PUT: api/Produto/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCor(int id, Cor cor)
+        public async Task<IActionResult> PutProduto(int id, Produto produto)
         {
-            if (id != cor.Id)
+            if (id != produto.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(cor).State = EntityState.Modified;
+            _context.Entry(produto).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace OMG.Api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CorExists(id))
+                if (!ProdutoExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace OMG.Api.Controllers
             return NoContent();
         }
 
-        // POST: api/Cor
+        // POST: api/Produto
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Cor>> PostCor(Cor cor)
+        public async Task<ActionResult<Produto>> PostProduto(Produto produto)
         {
-            _context.Cores.Add(cor);
+            _context.Produtos.Add(produto);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCor", new { id = cor.Id }, cor);
+            return CreatedAtAction("GetProduto", new { id = produto.Id }, produto);
         }
 
-        // DELETE: api/Cor/5
+        // DELETE: api/Produto/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCor(int id)
+        public async Task<IActionResult> DeleteProduto(int id)
         {
-            var cor = await _context.Cores.FindAsync(id);
-            if (cor == null)
+            var produto = await _context.Produtos.FindAsync(id);
+            if (produto == null)
             {
                 return NotFound();
             }
 
-            _context.Cores.Remove(cor);
+            _context.Produtos.Remove(produto);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool CorExists(int id)
+        private bool ProdutoExists(int id)
         {
-            return _context.Cores.Any(e => e.Id == id);
+            return _context.Produtos.Any(e => e.Id == id);
         }
     }
 }
