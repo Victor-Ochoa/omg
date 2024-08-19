@@ -15,6 +15,8 @@ public class Program
         builder.Services.AddControllers();
 
         builder.Services.AddDbContext<OMGDbContext>(option => {
+            option.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
+            option.UseLazyLoadingProxies();
             option.UseSqlServer(builder.Configuration.GetConnectionString("OMGdbConnection"));
         });
 

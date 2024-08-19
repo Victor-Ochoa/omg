@@ -4,5 +4,5 @@ namespace OMG.Domain.Entities;
 
 public class Formato : Entity
 {
-    public string Descricao { get; set; } = string.Empty;
+    public virtual string Descricao { get; set; } = string.Empty;
 }

@@ -5,15 +5,15 @@ namespace OMG.Domain.Entities;
 
 public class Pedido : Entity
 {
-    public required EPedidoStatus Status { get; set; } = EPedidoStatus.Novo;
+    public virtual required EPedidoStatus Status { get; set; } = EPedidoStatus.Novo;
 
-    public required Cliente Cliente { get; set; }
+    public virtual required Cliente Cliente { get; set; }
 
-    public required IList<PedidoItem> PedidoItens { get; set; }
+    public virtual required IList<PedidoItem> PedidoItens { get; set; }
 
-    public float ValorTotal { get; set; } = 0f;
-    public float Desconto { get; set; } = 0f;
-    public float Entrada { get; set; } = 0f;
-    public bool IsPermuta { get; set; } = false;
-    public DateOnly DataEntrega { get; set; } = new DateOnly();
+    public virtual float ValorTotal { get; set; } = 0f;
+    public virtual float Desconto { get; set; } = 0f;
+    public virtual float Entrada { get; set; } = 0f;
+    public virtual bool IsPermuta { get; set; } = false;
+    public virtual DateOnly DataEntrega { get; set; } = new DateOnly();
 }

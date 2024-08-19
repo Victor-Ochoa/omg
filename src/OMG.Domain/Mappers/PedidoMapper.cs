@@ -22,6 +22,7 @@ public static class PedidoMapper
     public static PedidoCard ConvertToPedidoCard(this Pedido pedido) => new()
     {
         PedidoId = pedido.Id,
+        Status = pedido.Status,
         NomeCliente = pedido.Cliente.Nome,
         TotalItens = pedido.PedidoItens.Count,
         ValorTotal = pedido.ValorTotal,
