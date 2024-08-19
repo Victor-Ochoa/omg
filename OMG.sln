@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OMG.Api", "src\OMG.Api\OMG.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataAccess", "DataAccess", "{51A6889A-D062-450A-8446-75CCEE49AAF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMG.Repository", "src\DataAccess\OMG.Repository\OMG.Repository.csproj", "{9C965896-601F-4353-AA02-37A03715908B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMG.Repository", "src\OMG.Repository\OMG.Repository.csproj", "{9C965896-601F-4353-AA02-37A03715908B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
