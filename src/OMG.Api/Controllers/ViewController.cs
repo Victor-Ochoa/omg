@@ -20,22 +20,19 @@ namespace OMG.Api.Controllers
         }
 
         [HttpGet("Pedido/Card")]
-        public async Task<ActionResult<IEnumerable<PedidoCard>>> GetPedidoCardList() =>
-            await _context.Pedidos.Include(x => x.Cliente).Include(x => x.PedidoItens).Where(x => x.Status != Domain.Enum.EPedidoStatus.Entregue)
-            .Union(_context.Pedidos.Include(x => x.Cliente).Include(x => x.PedidoItens).Where(x =>
+        public async Task<IActionResult> GetPedidoCardList() =>
+           Ok((await _context.Pedidos.Where(x => x.Status != Domain.Enum.EPedidoStatus.Entregue)
+            .Union(_context.Pedidos.Where(x =>
                 x.Status == Domain.Enum.EPedidoStatus.Entregue && x.DataEntrega <= DateOnly.FromDateTime(DateTime.Now).AddDays(-14)))
-            .Select(x => x.ConvertToPedidoCard())
-            .ToListAsync();
+            .ToListAsync())
+            .Select(x => x.ConvertToPedidoCard()));
 
 
 
         [HttpGet("Pedido/Modal/{id}")]
-        public async Task<ActionResult<PedidoModal>> GetPedidoModal(int id)
+        public async Task<IActionResult> GetPedidoModal(int id)
         {
-            var pedido = await _context.Pedidos
-                .AsTracking()
-                .Where(x => x.Id == id)
-                .FirstAsync();
+            var pedido = await _context.Pedidos.FindAsync(id);
 
             if (pedido == null)
                 return NotFound();

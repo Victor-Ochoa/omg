@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataAccess\OMG.Repository\OMG.Repository.csproj" />
     <ProjectReference Include="..\OMG.Domain\OMG.Domain.csproj" />
+    <ProjectReference Include="..\OMG.Repository\OMG.Repository.csproj" />
   </ItemGroup>
 
 </Project>
