@@ -1,6 +1,11 @@
+using Microsoft.Extensions.Configuration;
 using MudBlazor.Services;
+using OMG.Domain;
+using OMG.Domain.Handler;
+using OMG.WebApp.Client.Handler;
 using OMG.WebApp.Client.Pages;
 using OMG.WebApp.Components;
+using System.Globalization;
 
 namespace OMG.WebApp
 {
@@ -16,6 +21,19 @@ namespace OMG.WebApp
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveWebAssemblyComponents();
+
+            Configuracao.BackendUrl = builder.Configuration.GetSection("Configuracao").GetValue<string>("BackendUrl") ?? string.Empty;
+
+            builder.Services.AddTransient<IPedidoHandler, PedidoHandler>();
+
+            builder.Services.AddHttpClient(Configuracao.HttpClientNameOMGApi, opt =>
+            {
+                opt.BaseAddress = new Uri(Configuracao.BackendUrl);
+            });
+
+            builder.Services.AddLocalization();
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("pt-BR");
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("pt-BR");
 
             var app = builder.Build();
 

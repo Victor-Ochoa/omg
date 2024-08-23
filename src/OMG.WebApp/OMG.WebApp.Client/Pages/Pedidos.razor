@@ -1,0 +1,121 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Components
+@using System.ComponentModel.DataAnnotations
+@using OMG.Domain.Enum
+@using OMG.Domain.Handler
+@using OMG.Domain.ViewModels
+@inject IPedidoHandler _pedidoHandler
+
+<PageTitle>Pedidos</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">Pedidos</MudText>
+
+<MudButton Variant="Variant.Filled" Class="pa-4 ma-4" Color="Color.Primary">Novo Pedido</MudButton>
+
+<MudDropContainer T="PedidoCard" @ref="_dropContainer" Items="@_pedidos" ItemsSelector="@((item,column) => item.Status.ToString() == column)" ItemDropped="TaskUpdated" Class="d-flex flex-row">
+    <ChildContent>
+        @foreach (var item in _sections)
+        {
+            <MudPaper Elevation="0" Width="25%" MinHeight="100%" Class="pa-4 ma-4 d-flex flex-column mud-background-gray rounded-lg">
+                <MudToolBar Gutters="false">
+                    <MudText Typo="Typo.subtitle1"><b>@item.Name</b></MudText>
+                </MudToolBar>
+                <MudDropZone T="PedidoCard" Identifier="@item.PedidoStatus.ToString()" Class="mud-height-full" />
+            </MudPaper>
+        }
+    </ChildContent>
+    <ItemRenderer>
+        <MudPaper Outlined="true" Elevation="25" Class="pa-4 rounded-lg my-3">
+            <MudText Class="object-left-top">Cliente: @context.NomeCliente</MudText>
+            <MudText Class="object-right-top">Nº @context.PedidoId</MudText>
+            <MudText>Total de Itens: @context.TotalItens</MudText>
+            <MudText>Data de Entrega: @context.DataEntrega</MudText>
+            <MudText Class="object-right-bottom">Valor total: R$@context.ValorTotal.ToString("F2")</MudText>
+        </MudPaper>
+    </ItemRenderer>
+</MudDropContainer>
+@code {
+    private MudDropContainer<PedidoCard> _dropContainer;
+
+    /* handling board events */
+    private void TaskUpdated(MudItemDropInfo<PedidoCard> info)
+    {
+        info.Item.Status = Enum.Parse<EPedidoStatus>(info.DropzoneIdentifier);
+    }
+
+    /* Setup for board  */
+    private List<PedidoKanbanSection> _sections = new()
+        {
+            new PedidoKanbanSection("Novo", EPedidoStatus.Novo),
+            new PedidoKanbanSection("Em Produção",EPedidoStatus.Producao),
+            new PedidoKanbanSection("Pronto", EPedidoStatus.Pronto),
+            new PedidoKanbanSection("Entregue", EPedidoStatus.Entregue),
+        };
+
+    public class PedidoKanbanSection
+    {
+        public PedidoKanbanSection(string name, EPedidoStatus pedidoStatus)
+        {
+            Name = name;
+            PedidoStatus = pedidoStatus;
+        }
+
+        public string Name { get; init; }
+        public EPedidoStatus PedidoStatus { get; set; }
+    }
+
+    private List<PedidoCard> _pedidos = new()
+        {
+            new PedidoCard
+            {
+                NomeCliente = "Teste 1",
+                PedidoId = 1,
+                Status = EPedidoStatus.Novo,
+                TotalItens = 3,
+                ValorTotal = 1000,
+                DataEntrega = DateOnly.FromDateTime(DateTime.Now.AddDays(20))
+            },
+            new PedidoCard
+            {
+                NomeCliente = "Teste 2",
+                PedidoId = 2,
+                Status = EPedidoStatus.Producao,
+                TotalItens = 30,
+                ValorTotal = 1500,
+                DataEntrega = DateOnly.FromDateTime(DateTime.Now.AddDays(15))
+            },
+            new PedidoCard
+            {
+                NomeCliente = "Teste 3",
+                PedidoId = 3,
+                Status = EPedidoStatus.Pronto,
+                TotalItens = 4,
+                ValorTotal = 100,
+                DataEntrega = DateOnly.FromDateTime(DateTime.Now.AddDays(5))
+            },
+            new PedidoCard
+            {
+                NomeCliente = "Teste 4",
+                PedidoId = 4,
+                Status = EPedidoStatus.Entregue,
+                TotalItens = 1,
+                ValorTotal = 100,
+                DataEntrega = DateOnly.FromDateTime(DateTime.Now.AddDays(-10))
+            }
+        };
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        await base.OnInitializedAsync();
+
+        _pedidos = (await _pedidoHandler.GetPedidoCardList()).Data.ToList();
+
+    }
+
+    private void AddTask(PedidoKanbanSection section)
+    {
+        _pedidos.Add(new PedidoCard());
+        _dropContainer.Refresh();
+    }
+}
