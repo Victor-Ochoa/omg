@@ -6,7 +6,7 @@ using OMG.Domain.ViewModels;
 using System.Net.Http;
 using System.Net.Http.Json;
 
-namespace OMG.WebApp.Client.Handler;
+namespace OMG.WebApp.Handler;
 
 public class PedidoHandler(IHttpClientFactory httpClientFactory) : IPedidoHandler
 {

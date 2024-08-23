@@ -2,8 +2,8 @@ using Microsoft.Extensions.Configuration;
 using MudBlazor.Services;
 using OMG.Domain;
 using OMG.Domain.Handler;
-using OMG.WebApp.Client.Handler;
-using OMG.WebApp.Client.Pages;
+using OMG.WebApp.Handler;
+using OMG.WebApp.Pages;
 using OMG.WebApp.Components;
 using System.Globalization;
 
@@ -55,8 +55,7 @@ namespace OMG.WebApp
             app.UseAntiforgery();
 
             app.MapRazorComponents<App>()
-                .AddInteractiveWebAssemblyRenderMode()
-                .AddAdditionalAssemblies(typeof(Client._Imports).Assembly);
+                .AddInteractiveWebAssemblyRenderMode();
 
             app.Run();
         }
