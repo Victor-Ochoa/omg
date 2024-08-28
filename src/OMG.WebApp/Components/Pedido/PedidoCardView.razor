@@ -1,0 +1,22 @@
+﻿@using OMG.Domain.ViewModels
+@inject IDialogService DialogService
+
+<MudPaper Outlined="true" Elevation="25" Class="pa-4 rounded-lg my-3" @ondblclick="OpenPedidoModalAsync">
+    <MudText Class="object-left-top">Cliente: @Item.NomeCliente</MudText>
+    <MudText Class="object-right-top">Nº @Item.PedidoId</MudText>
+    <MudText>Total de Itens: @Item.TotalItens</MudText>
+    <MudText>Data de Entrega: @Item.DataEntrega</MudText>
+    <MudText Class="object-right-bottom">Valor total: R$@Item.ValorTotal.ToString("F2")</MudText>
+</MudPaper>
+
+@code {
+    [Parameter, EditorRequired]
+    public required PedidoCard Item { get; set; }
+
+    private async Task OpenPedidoModalAsync()
+    {
+        var parameters = new DialogParameters<PedidoModalView> { { x => x.PedidoId, Item.PedidoId } };
+
+        var dialog = await DialogService.ShowAsync<PedidoModalView>("Pedido", parameters);
+    }
+}

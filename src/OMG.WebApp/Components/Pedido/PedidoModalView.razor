@@ -1,0 +1,22 @@
+﻿@using OMG.Domain.Handler
+@using OMG.Domain.ViewModels
+@inject IPedidoHandler _pedidoHandler
+
+<h3>@_pedidoModal.ClienteNome</h3>
+
+@code {
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    private PedidoModal _pedidoModal { get; set; } = new PedidoModal();
+
+    [Parameter]
+    public int PedidoId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var resultApi = await _pedidoHandler.GetPedidoModal(1);
+        if (resultApi.IsSuccess && resultApi.Data != null)
+            _pedidoModal = resultApi.Data;
+    }
+}

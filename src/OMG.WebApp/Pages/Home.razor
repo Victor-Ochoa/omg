@@ -25,13 +25,7 @@
         }
     </ChildContent>
     <ItemRenderer>
-        <MudPaper Outlined="true" Elevation="25" Class="pa-4 rounded-lg my-3">
-            <MudText Class="object-left-top">Cliente: @context.NomeCliente</MudText>
-            <MudText Class="object-right-top">Nº @context.PedidoId</MudText>
-            <MudText>Total de Itens: @context.TotalItens</MudText>
-            <MudText>Data de Entrega: @context.DataEntrega</MudText>
-            <MudText Class="object-right-bottom">Valor total: R$@context.ValorTotal.ToString("F2")</MudText>
-        </MudPaper>
+        <OMG.WebApp.Components.Pedido.PedidoCardView Item="@context"/>
     </ItemRenderer>
 </MudDropContainer>
 @code {
@@ -65,45 +59,7 @@
         public EPedidoStatus PedidoStatus { get; set; }
     }
 
-    private List<PedidoCard> _pedidos = new()
-    {
-        // new PedidoCard
-        // {
-        //     NomeCliente = "Teste 1",
-        //     PedidoId = 1,
-        //     Status = EPedidoStatus.Novo,
-        //     TotalItens = 3,
-        //     ValorTotal = 1000,
-        //     DataEntrega = DateOnly.FromDateTime(DateTime.Now.AddDays(20))
-        // },
-        // new PedidoCard
-        // {
-        //     NomeCliente = "Teste 2",
-        //     PedidoId = 2,
-        //     Status = EPedidoStatus.Producao,
-        //     TotalItens = 30,
-        //     ValorTotal = 1500,
-        //     DataEntrega = DateOnly.FromDateTime(DateTime.Now.AddDays(15))
-        // },
-        // new PedidoCard
-        // {
-        //     NomeCliente = "Teste 3",
-        //     PedidoId = 3,
-        //     Status = EPedidoStatus.Pronto,
-        //     TotalItens = 4,
-        //     ValorTotal = 100,
-        //     DataEntrega = DateOnly.FromDateTime(DateTime.Now.AddDays(5))
-        // },
-        // new PedidoCard
-        // {
-        //     NomeCliente = "Teste 4",
-        //     PedidoId = 4,
-        //     Status = EPedidoStatus.Entregue,
-        //     TotalItens = 1,
-        //     ValorTotal = 100,
-        //     DataEntrega = DateOnly.FromDateTime(DateTime.Now.AddDays(-10))
-        // }
-    };
+    private List<PedidoCard> _pedidos = new(){};
 
     protected override async Task OnInitializedAsync()
     {

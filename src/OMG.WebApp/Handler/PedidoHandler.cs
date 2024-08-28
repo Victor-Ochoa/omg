@@ -20,8 +20,13 @@ public class PedidoHandler(IHttpClientFactory httpClientFactory) : IPedidoHandle
         return new Response<IEnumerable<PedidoCard>>((int)response.StatusCode, await response.Content.ReadAsStringAsync());
     }
 
-    public Task<Response<PedidoModal>> GetPedidoModal(int Id)
+    public async Task<Response<PedidoModal>> GetPedidoModal(int Id)
     {
-        throw new NotImplementedException();
+        var response = await _client.GetAsync($"api/View/Pedido/Modal/{Id}");
+
+        if (response.IsSuccessStatusCode)
+            return new Response<PedidoModal>(await response.Content.ReadFromJsonAsync<PedidoModal>(), (int)response.StatusCode);
+
+        return new Response<PedidoModal>((int)response.StatusCode, await response.Content.ReadAsStringAsync());
     }
 }
