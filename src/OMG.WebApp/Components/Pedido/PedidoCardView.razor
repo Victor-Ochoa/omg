@@ -1,5 +1,7 @@
-﻿@using OMG.Domain.ViewModels
+﻿@using OMG.Domain.Handler
+@using OMG.Domain.ViewModels
 @inject IDialogService DialogService
+@inject IPedidoHandler _pedidoHandler
 
 <MudPaper Outlined="true" Elevation="25" Class="pa-4 rounded-lg my-3" @ondblclick="OpenPedidoModalAsync">
     <MudText Class="object-left-top">Cliente: @Item.NomeCliente</MudText>
@@ -15,8 +17,12 @@
 
     private async Task OpenPedidoModalAsync()
     {
-        var parameters = new DialogParameters<PedidoModalView> { { x => x.PedidoId, Item.PedidoId } };
+        var resultApi = await _pedidoHandler.GetPedidoModal(1);
+        if (resultApi.IsSuccess && resultApi.Data != null)
+        {
+            var parameters = new DialogParameters<PedidoModalView> { { x => x._pedidoModal, resultApi.Data }};
+            var dialog = await DialogService.ShowAsync<PedidoModalView>("Pedido", parameters);
+        }
 
-        var dialog = await DialogService.ShowAsync<PedidoModalView>("Pedido", parameters);
     }
 }

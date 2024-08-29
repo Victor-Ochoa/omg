@@ -7,4 +7,5 @@ public class PedidoItemModal
     public string Produto { get; set; } = string.Empty;
     public string Formato { get; set; } = string.Empty;
     public string Cor { get; set; } = string.Empty;
+    public string Aroma { get; set; } = string.Empty;
 }

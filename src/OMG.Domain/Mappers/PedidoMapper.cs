@@ -24,7 +24,7 @@ public static class PedidoMapper
         PedidoId = pedido.Id,
         Status = pedido.Status,
         NomeCliente = pedido.Cliente.Nome,
-        TotalItens = pedido.PedidoItens.Count,
+        TotalItens = pedido.PedidoItens.Sum(x => x.Quantidade),
         ValorTotal = pedido.ValorTotal,
         DataEntrega = pedido.DataEntrega
 

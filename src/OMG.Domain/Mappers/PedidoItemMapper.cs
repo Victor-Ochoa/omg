@@ -11,6 +11,7 @@ public static class PedidoItemMapper
         Cor = item.Cor.Nome,
         Formato = item.Formato.Descricao,
         Produto = item.Produto.Descricao,
-        Quantidade = item.Quantidade
+        Quantidade = item.Quantidade,
+        Aroma = item.Aroma.Nome,
     };
 }
