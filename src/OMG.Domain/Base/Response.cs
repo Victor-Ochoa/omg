@@ -2,23 +2,22 @@
 
 namespace OMG.Domain.Base;
 
-public class Response<TData>
+public class Response<TData> : Response
 {
-    public Response(TData? data, int code = 200)
+    public Response(TData? data = default, int code = 200, string message = ""): base(code, message)
     {
         Data = data;
         Code = code;
     }
 
-    public Response(int code, string message)
-    {
-        Message = message;
-        Code = code;
-    }
-
     public TData? Data { get; set; }
-    public string Message { get; set; } = string.Empty;
-    public int Code { get; set; }
+    
+}
+
+public class Response(int code = 200, string message = "")
+{
+    public string Message { get; set; } = message;
+    public int Code { get; set; } = code;
 
     [JsonIgnore]
     public bool IsSuccess

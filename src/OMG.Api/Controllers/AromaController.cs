@@ -1,108 +1,97 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OMG.Domain.Entities;
 using OMG.Repository;
 
-namespace OMG.Api.Controllers
+namespace OMG.Api.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class AromaController(OMGDbContext context) : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AromaController : ControllerBase
+    private readonly OMGDbContext _context = context;
+
+    // GET: api/Aroma
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Aroma>>> GetAromas()
     {
-        private readonly OMGDbContext _context;
+        return await _context.Aromas.ToListAsync();
+    }
 
-        public AromaController(OMGDbContext context)
+    // GET: api/Aroma/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Aroma>> GetAroma(int id)
+    {
+        var aroma = await _context.Aromas.FindAsync(id);
+
+        if (aroma == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        // GET: api/Aroma
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Aroma>>> GetAromas()
+        return aroma;
+    }
+
+    // PUT: api/Aroma/5
+    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutAroma(int id, Aroma aroma)
+    {
+        if (id != aroma.Id)
         {
-            return await _context.Aromas.ToListAsync();
+            return BadRequest();
         }
 
-        // GET: api/Aroma/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Aroma>> GetAroma(int id)
-        {
-            var aroma = await _context.Aromas.FindAsync(id);
+        _context.Entry(aroma).State = EntityState.Modified;
 
-            if (aroma == null)
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!AromaExists(id))
             {
                 return NotFound();
             }
-
-            return aroma;
-        }
-
-        // PUT: api/Aroma/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAroma(int id, Aroma aroma)
-        {
-            if (id != aroma.Id)
+            else
             {
-                return BadRequest();
+                throw;
             }
-
-            _context.Entry(aroma).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AromaExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
         }
 
-        // POST: api/Aroma
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Aroma>> PostAroma(Aroma aroma)
+        return NoContent();
+    }
+
+    // POST: api/Aroma
+    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    [HttpPost]
+    public async Task<ActionResult<Aroma>> PostAroma(Aroma aroma)
+    {
+        _context.Aromas.Add(aroma);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction("GetAroma", new { id = aroma.Id }, aroma);
+    }
+
+    // DELETE: api/Aroma/5
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteAroma(int id)
+    {
+        var aroma = await _context.Aromas.FindAsync(id);
+        if (aroma == null)
         {
-            _context.Aromas.Add(aroma);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetAroma", new { id = aroma.Id }, aroma);
+            return NotFound();
         }
 
-        // DELETE: api/Aroma/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAroma(int id)
-        {
-            var aroma = await _context.Aromas.FindAsync(id);
-            if (aroma == null)
-            {
-                return NotFound();
-            }
+        _context.Aromas.Remove(aroma);
+        await _context.SaveChangesAsync();
 
-            _context.Aromas.Remove(aroma);
-            await _context.SaveChangesAsync();
+        return NoContent();
+    }
 
-            return NoContent();
-        }
-
-        private bool AromaExists(int id)
-        {
-            return _context.Aromas.Any(e => e.Id == id);
-        }
+    private bool AromaExists(int id)
+    {
+        return _context.Aromas.Any(e => e.Id == id);
     }
 }

@@ -4,25 +4,24 @@
 @inject IPedidoHandler _pedidoHandler
 
 <MudPaper Outlined="true" Elevation="25" Class="pa-4 rounded-lg my-3" @ondblclick="OpenPedidoModalAsync">
-    <MudText Class="object-left-top">Cliente: @Item.NomeCliente</MudText>
-    <MudText Class="object-right-top">Nº @Item.PedidoId</MudText>
-    <MudText>Total de Itens: @Item.TotalItens</MudText>
-    <MudText>Data de Entrega: @Item.DataEntrega</MudText>
-    <MudText Class="object-right-bottom">Valor total: R$@Item.ValorTotal.ToString("F2")</MudText>
+    <MudText Class="object-left-top" Typo="Typo.h6">Cliente: @Item.NomeCliente</MudText>
+    <MudText Typo="Typo.body1">Total de Itens: @Item.TotalItens</MudText>
+    <MudText Typo="Typo.body1">Data de Entrega: @Item.DataEntrega</MudText>
+    <MudText Typo="Typo.body1" Class="object-right-bottom">Valor total: R$@Item.ValorTotal.ToString("F2")</MudText>
 </MudPaper>
 
 @code {
-    [Parameter, EditorRequired]
-    public required PedidoCard Item { get; set; }
+[Parameter, EditorRequired]
+public required PedidoCard Item { get; set; }
 
-    private async Task OpenPedidoModalAsync()
-    {
-        var resultApi = await _pedidoHandler.GetPedidoModal(1);
-        if (resultApi.IsSuccess && resultApi.Data != null)
-        {
-            var parameters = new DialogParameters<PedidoModalView> { { x => x._pedidoModal, resultApi.Data }};
-            var dialog = await DialogService.ShowAsync<PedidoModalView>("Pedido", parameters);
-        }
+private async Task OpenPedidoModalAsync()
+{
+var resultApi = await _pedidoHandler.GetPedidoModal(1);
+if (resultApi.IsSuccess && resultApi.Data != null)
+{
+    var parameters = new DialogParameters<PedidoModalView> { { x => x._pedidoModal, resultApi.Data }};
+    var dialog = await DialogService.ShowAsync<PedidoModalView>("Pedido", parameters);
+}
 
-    }
+}
 }

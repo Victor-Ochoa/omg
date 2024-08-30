@@ -3,13 +3,24 @@ using OMG.Domain.Handler;
 using OMG.Domain.ViewModels;
 using OMG.Domain;
 using System.Net.Http.Json;
-using System.Net.Http;
+using OMG.Domain.Request;
 
 namespace OMG.WebApp.Handler;
 
 public class PedidoHandler(IHttpClientFactory httpClientFactory) : IPedidoHandler
 {
     private readonly HttpClient _client = httpClientFactory.CreateClient(Configuracao.HttpClientNameOMGApi);
+
+    public async Task<Response> ChangeStatus(PedidoChangeStatusRequest request)
+    {
+        var response = await _client.PutAsJsonAsync($"api/Pedido/ChangeStatus",request);
+
+        if (response.IsSuccessStatusCode)
+            return new Response(code: (int)response.StatusCode);
+
+        return new Response(code: (int)response.StatusCode, message: await response.Content.ReadAsStringAsync());
+    }
+
     public async Task<Response<IEnumerable<PedidoCard>>> GetPedidoCardList()
     {
         var response = await _client.GetAsync("api/View/Pedido/Card");
@@ -17,7 +28,7 @@ public class PedidoHandler(IHttpClientFactory httpClientFactory) : IPedidoHandle
         if (response.IsSuccessStatusCode)
             return new Response<IEnumerable<PedidoCard>>(await response.Content.ReadFromJsonAsync<IEnumerable<PedidoCard>>(), (int)response.StatusCode);
 
-        return new Response<IEnumerable<PedidoCard>>((int)response.StatusCode, await response.Content.ReadAsStringAsync());
+        return new Response<IEnumerable<PedidoCard>>(code: (int)response.StatusCode, message: await response.Content.ReadAsStringAsync());
     }
 
     public async Task<Response<PedidoModal>> GetPedidoModal(int Id)
@@ -27,6 +38,6 @@ public class PedidoHandler(IHttpClientFactory httpClientFactory) : IPedidoHandle
         if (response.IsSuccessStatusCode)
             return new Response<PedidoModal>(await response.Content.ReadFromJsonAsync<PedidoModal>(), (int)response.StatusCode);
 
-        return new Response<PedidoModal>((int)response.StatusCode, await response.Content.ReadAsStringAsync());
+        return new Response<PedidoModal>(code: (int)response.StatusCode, message: await response.Content.ReadAsStringAsync());
     }
 }

@@ -9,279 +9,278 @@ using OMG.Repository;
 
 #nullable disable
 
-namespace OMG.Repository.Migrations
+namespace OMG.Repository.Migrations;
+
+[DbContext(typeof(OMGDbContext))]
+[Migration("20240819003940_addlazyload")]
+partial class addlazyload
 {
-    [DbContext(typeof(OMGDbContext))]
-    [Migration("20240819003940_addlazyload")]
-    partial class addlazyload
+    /// <inheritdoc />
+    protected override void BuildTargetModel(ModelBuilder modelBuilder)
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+        modelBuilder
+            .HasAnnotation("ProductVersion", "8.0.8")
+            .HasAnnotation("Proxies:ChangeTracking", false)
+            .HasAnnotation("Proxies:CheckEquality", false)
+            .HasAnnotation("Proxies:LazyLoading", true)
+            .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+        SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("OMG.Domain.Entities.Aroma", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+        modelBuilder.Entity("OMG.Domain.Entities.Aroma", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                b.Property<string>("Nome")
+                    .IsRequired()
+                    .HasMaxLength(250)
+                    .HasColumnType("nvarchar(250)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("Nome");
+                b.HasIndex("Nome");
 
-                    b.ToTable("Aromas");
-                });
+                b.ToTable("Aromas");
+            });
 
-            modelBuilder.Entity("OMG.Domain.Entities.Cliente", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+        modelBuilder.Entity("OMG.Domain.Entities.Cliente", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Endereco")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                b.Property<string>("Endereco")
+                    .IsRequired()
+                    .HasMaxLength(300)
+                    .HasColumnType("nvarchar(300)");
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                b.Property<string>("Nome")
+                    .IsRequired()
+                    .HasMaxLength(150)
+                    .HasColumnType("nvarchar(150)");
 
-                    b.Property<string>("Telefone")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                b.Property<string>("Telefone")
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("Nome");
+                b.HasIndex("Nome");
 
-                    b.ToTable("Clientes");
-                });
+                b.ToTable("Clientes");
+            });
 
-            modelBuilder.Entity("OMG.Domain.Entities.Cor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+        modelBuilder.Entity("OMG.Domain.Entities.Cor", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                b.Property<string>("Nome")
+                    .IsRequired()
+                    .HasMaxLength(250)
+                    .HasColumnType("nvarchar(250)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("Nome");
+                b.HasIndex("Nome");
 
-                    b.ToTable("Cores");
-                });
+                b.ToTable("Cores");
+            });
 
-            modelBuilder.Entity("OMG.Domain.Entities.Formato", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+        modelBuilder.Entity("OMG.Domain.Entities.Formato", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                b.Property<string>("Descricao")
+                    .IsRequired()
+                    .HasMaxLength(250)
+                    .HasColumnType("nvarchar(250)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("Descricao");
+                b.HasIndex("Descricao");
 
-                    b.ToTable("Formatos");
-                });
+                b.ToTable("Formatos");
+            });
 
-            modelBuilder.Entity("OMG.Domain.Entities.Pedido", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+        modelBuilder.Entity("OMG.Domain.Entities.Pedido", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
+                b.Property<int>("ClienteId")
+                    .HasColumnType("int");
 
-                    b.Property<DateOnly>("DataEntrega")
-                        .HasColumnType("date");
+                b.Property<DateOnly>("DataEntrega")
+                    .HasColumnType("date");
 
-                    b.Property<float>("Desconto")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("real")
-                        .HasDefaultValue(0f);
+                b.Property<float>("Desconto")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("real")
+                    .HasDefaultValue(0f);
 
-                    b.Property<float>("Entrada")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("real")
-                        .HasDefaultValue(0f);
+                b.Property<float>("Entrada")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("real")
+                    .HasDefaultValue(0f);
 
-                    b.Property<bool>("IsPermuta")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                b.Property<bool>("IsPermuta")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("bit")
+                    .HasDefaultValue(false);
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                b.Property<int>("Status")
+                    .HasColumnType("int");
 
-                    b.Property<float>("ValorTotal")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("real")
-                        .HasDefaultValue(0f);
+                b.Property<float>("ValorTotal")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("real")
+                    .HasDefaultValue(0f);
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("ClienteId");
+                b.HasIndex("ClienteId");
 
-                    b.ToTable("Pedidos");
-                });
+                b.ToTable("Pedidos");
+            });
 
-            modelBuilder.Entity("OMG.Domain.Entities.PedidoItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+        modelBuilder.Entity("OMG.Domain.Entities.PedidoItem", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AromaId")
-                        .HasColumnType("int");
+                b.Property<int>("AromaId")
+                    .HasColumnType("int");
 
-                    b.Property<int>("CorId")
-                        .HasColumnType("int");
+                b.Property<int>("CorId")
+                    .HasColumnType("int");
 
-                    b.Property<int>("FormatoId")
-                        .HasColumnType("int");
+                b.Property<int>("FormatoId")
+                    .HasColumnType("int");
 
-                    b.Property<int>("PedidoId")
-                        .HasColumnType("int");
+                b.Property<int>("PedidoId")
+                    .HasColumnType("int");
 
-                    b.Property<int>("ProdutoId")
-                        .HasColumnType("int");
+                b.Property<int>("ProdutoId")
+                    .HasColumnType("int");
 
-                    b.Property<int>("Quantidade")
-                        .HasColumnType("int");
+                b.Property<int>("Quantidade")
+                    .HasColumnType("int");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("AromaId");
+                b.HasIndex("AromaId");
 
-                    b.HasIndex("CorId");
+                b.HasIndex("CorId");
 
-                    b.HasIndex("FormatoId");
+                b.HasIndex("FormatoId");
 
-                    b.HasIndex("PedidoId");
+                b.HasIndex("PedidoId");
 
-                    b.HasIndex("ProdutoId");
+                b.HasIndex("ProdutoId");
 
-                    b.ToTable("PedidoItens");
-                });
+                b.ToTable("PedidoItens");
+            });
 
-            modelBuilder.Entity("OMG.Domain.Entities.Produto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+        modelBuilder.Entity("OMG.Domain.Entities.Produto", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                b.Property<string>("Descricao")
+                    .IsRequired()
+                    .HasMaxLength(250)
+                    .HasColumnType("nvarchar(250)");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("Descricao");
+                b.HasIndex("Descricao");
 
-                    b.ToTable("Produtos");
-                });
+                b.ToTable("Produtos");
+            });
 
-            modelBuilder.Entity("OMG.Domain.Entities.Pedido", b =>
-                {
-                    b.HasOne("OMG.Domain.Entities.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+        modelBuilder.Entity("OMG.Domain.Entities.Pedido", b =>
+            {
+                b.HasOne("OMG.Domain.Entities.Cliente", "Cliente")
+                    .WithMany()
+                    .HasForeignKey("ClienteId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Cliente");
-                });
+                b.Navigation("Cliente");
+            });
 
-            modelBuilder.Entity("OMG.Domain.Entities.PedidoItem", b =>
-                {
-                    b.HasOne("OMG.Domain.Entities.Aroma", "Aroma")
-                        .WithMany()
-                        .HasForeignKey("AromaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+        modelBuilder.Entity("OMG.Domain.Entities.PedidoItem", b =>
+            {
+                b.HasOne("OMG.Domain.Entities.Aroma", "Aroma")
+                    .WithMany()
+                    .HasForeignKey("AromaId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("OMG.Domain.Entities.Cor", "Cor")
-                        .WithMany()
-                        .HasForeignKey("CorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("OMG.Domain.Entities.Cor", "Cor")
+                    .WithMany()
+                    .HasForeignKey("CorId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("OMG.Domain.Entities.Formato", "Formato")
-                        .WithMany()
-                        .HasForeignKey("FormatoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("OMG.Domain.Entities.Formato", "Formato")
+                    .WithMany()
+                    .HasForeignKey("FormatoId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("OMG.Domain.Entities.Pedido", "Pedido")
-                        .WithMany("PedidoItens")
-                        .HasForeignKey("PedidoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("OMG.Domain.Entities.Pedido", "Pedido")
+                    .WithMany("PedidoItens")
+                    .HasForeignKey("PedidoId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("OMG.Domain.Entities.Produto", "Produto")
-                        .WithMany()
-                        .HasForeignKey("ProdutoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("OMG.Domain.Entities.Produto", "Produto")
+                    .WithMany()
+                    .HasForeignKey("ProdutoId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Aroma");
+                b.Navigation("Aroma");
 
-                    b.Navigation("Cor");
+                b.Navigation("Cor");
 
-                    b.Navigation("Formato");
+                b.Navigation("Formato");
 
-                    b.Navigation("Pedido");
+                b.Navigation("Pedido");
 
-                    b.Navigation("Produto");
-                });
+                b.Navigation("Produto");
+            });
 
-            modelBuilder.Entity("OMG.Domain.Entities.Pedido", b =>
-                {
-                    b.Navigation("PedidoItens");
-                });
+        modelBuilder.Entity("OMG.Domain.Entities.Pedido", b =>
+            {
+                b.Navigation("PedidoItens");
+            });
 #pragma warning restore 612, 618
-        }
     }
 }

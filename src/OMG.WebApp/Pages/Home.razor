@@ -1,9 +1,6 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.Components
 @using System.ComponentModel.DataAnnotations
-@using OMG.Domain.Enum
-@using OMG.Domain.Handler
-@using OMG.Domain.ViewModels
 @inject IPedidoHandler _pedidoHandler
 
 <PageTitle>Pedidos</PageTitle>
@@ -25,7 +22,7 @@
         }
     </ChildContent>
     <ItemRenderer>
-        <OMG.WebApp.Components.Pedido.PedidoCardView Item="@context"/>
+        <OMG.WebApp.Components.Pedido.PedidoCardView Item="@context" />
     </ItemRenderer>
 </MudDropContainer>
 @code {
@@ -33,19 +30,25 @@
     private MudDropContainer<PedidoCard> _dropContainer;
 
     /* handling board events */
-    private void TaskUpdated(MudItemDropInfo<PedidoCard> info)
+    private async Task TaskUpdated(MudItemDropInfo<PedidoCard> info)
     {
-        info.Item.Status = Enum.Parse<EPedidoStatus>(info.DropzoneIdentifier);
+        if (info.Item.Status == Enum.Parse<EPedidoStatus>(info.DropzoneIdentifier))
+            return;
+
+        var resultApi = await _pedidoHandler.ChangeStatus(new PedidoChangeStatusRequest(info.Item.PedidoId, Enum.Parse<EPedidoStatus>(info.DropzoneIdentifier)));
+
+        if (resultApi.IsSuccess)
+            info.Item.Status = Enum.Parse<EPedidoStatus>(info.DropzoneIdentifier);
     }
 
     /* Setup for board  */
     private List<PedidoKanbanSection> _sections = new()
-        {
-            new PedidoKanbanSection("Novo", EPedidoStatus.Novo),
-            new PedidoKanbanSection("Em Produção",EPedidoStatus.Producao),
-            new PedidoKanbanSection("Pronto", EPedidoStatus.Pronto),
-            new PedidoKanbanSection("Entregue", EPedidoStatus.Entregue),
-        };
+{
+    new PedidoKanbanSection("Novo", EPedidoStatus.Novo),
+    new PedidoKanbanSection("Em Produção",EPedidoStatus.Producao),
+    new PedidoKanbanSection("Pronto", EPedidoStatus.Pronto),
+    new PedidoKanbanSection("Entregue", EPedidoStatus.Entregue),
+};
 
     public class PedidoKanbanSection
     {
@@ -59,7 +62,7 @@
         public EPedidoStatus PedidoStatus { get; set; }
     }
 
-    private List<PedidoCard> _pedidos = new(){};
+    private List<PedidoCard> _pedidos = new() { };
 
     protected override async Task OnInitializedAsync()
     {

@@ -1,0 +1,26 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using OMG.Domain.Contracts.Repository;
+using OMG.Repository.Repositories;
+
+namespace OMG.Repository;
+
+public static class RepositoryDI
+{
+    public static IServiceCollection AddOMGRepository(this IServiceCollection services, string connectionString)
+    {
+
+        services.AddDbContext<OMGDbContext>(option =>
+        {
+            option.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
+            option.UseLazyLoadingProxies();
+            option.UseSqlServer(connectionString);
+        });
+
+
+        services.AddTransient<IPedidoRepository, PedidoRepository>();
+        services.AddTransient<IEventRepository, EventRepository>();
+
+        return services;
+    }
+}

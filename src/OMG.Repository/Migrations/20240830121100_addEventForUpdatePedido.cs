@@ -5,7 +5,7 @@
 namespace OMG.Repository.Migrations;
 
 /// <inheritdoc />
-public partial class addlazyload : Migration
+public partial class addEventForUpdatePedido : Migration
 {
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)

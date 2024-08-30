@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using OMG.Repository;
+using OMG.Domain;
 
 namespace OMG.Api;
 
@@ -15,12 +16,9 @@ public class Program
 
         builder.Services.AddControllers();
 
-        builder.Services.AddDbContext<OMGDbContext>(option =>
-        {
-            option.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
-            option.UseLazyLoadingProxies();
-            option.UseSqlServer(builder.Configuration.GetConnectionString("OMGdbConnection"));
-        });
+        builder.Services.AddOMGServices();
+
+        builder.Services.AddOMGRepository(builder.Configuration.GetConnectionString("OMGdbConnection"));
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
