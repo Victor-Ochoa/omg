@@ -29,9 +29,17 @@
 
     private MudDropContainer<PedidoCard> _dropContainer;
 
+    public Home(MudDropContainer<PedidoCard> dropContainer)
+    {
+        _dropContainer = dropContainer;
+    }
+
     /* handling board events */
     private async Task TaskUpdated(MudItemDropInfo<PedidoCard> info)
     {
+        if (info.Item == null)
+            return;
+
         if (info.Item.Status == Enum.Parse<EPedidoStatus>(info.DropzoneIdentifier))
             return;
 
@@ -69,7 +77,7 @@
         await base.OnInitializedAsync();
 
         var resultApi = await _pedidoHandler.GetPedidoCardList();
-        if (resultApi.IsSuccess && resultApi.Data.Any())
+        if (resultApi.IsSuccess && resultApi.Data != null && resultApi.Data.Any())
             _pedidos.AddRange(resultApi.Data);
 
         _dropContainer.Refresh();

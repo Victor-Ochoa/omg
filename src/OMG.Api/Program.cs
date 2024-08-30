@@ -18,7 +18,7 @@ public class Program
 
         builder.Services.AddOMGServices();
 
-        builder.Services.AddOMGRepository(builder.Configuration.GetConnectionString("OMGdbConnection"));
+        builder.Services.AddOMGRepository(builder.Configuration.GetConnectionString("OMGdbConnection") ?? "");
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
