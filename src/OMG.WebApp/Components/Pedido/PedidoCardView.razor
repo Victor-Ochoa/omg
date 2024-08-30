@@ -4,10 +4,20 @@
 @inject IPedidoHandler _pedidoHandler
 
 <MudPaper Outlined="true" Elevation="25" Class="pa-4 rounded-lg my-3" @ondblclick="OpenPedidoModalAsync">
-    <MudText Class="object-left-top" Typo="Typo.h6">Cliente: @Item.NomeCliente</MudText>
-    <MudText Typo="Typo.body1">Total de Itens: @Item.TotalItens</MudText>
-    <MudText Typo="Typo.body1">Data de Entrega: @Item.DataEntrega</MudText>
-    <MudText Typo="Typo.body1" Class="object-right-bottom">Valor total: R$@Item.ValorTotal.ToString("F2")</MudText>
+    <MudGrid Spacing="2" Justify="Justify.Center">
+        <MudItem xs="12">
+            <MudText Class="object-left-top" Typo="Typo.h6">Cliente: @Item.NomeCliente</MudText>
+        </MudItem>
+        <MudItem xs="12">
+            <MudText Typo="Typo.body1">Total de Itens: @Item.TotalItens</MudText>
+        </MudItem>
+        <MudItem xs="12">
+            <MudText Typo="Typo.body1">Data de Entrega: @Item.DataEntrega</MudText>
+        </MudItem>
+        <MudItem xs="12">
+            <MudText Typo="Typo.body1" Class="object-right-bottom">Valor total: R$@Item.ValorTotal.ToString("F2")</MudText>
+        </MudItem>
+    </MudGrid>
 </MudPaper>
 
 @code {

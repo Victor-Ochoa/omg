@@ -5,8 +5,8 @@ namespace OMG.Domain.Events;
 
 public class EventChangeStatus : Event
 {
-    public int IdPedido { get; set; }
-    public EPedidoStatus OldStatus { get; set; }
-    public EPedidoStatus NewStatus { get; set; }
+    public virtual int IdPedido { get; set; }
+    public virtual EPedidoStatus OldStatus { get; set; }
+    public virtual EPedidoStatus NewStatus { get; set; }
 
 }
