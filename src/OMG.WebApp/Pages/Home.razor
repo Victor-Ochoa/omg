@@ -27,12 +27,7 @@
 </MudDropContainer>
 @code {
 
-    private MudDropContainer<PedidoCard> _dropContainer;
-
-    public Home(MudDropContainer<PedidoCard> dropContainer)
-    {
-        _dropContainer = dropContainer;
-    }
+    private MudDropContainer<PedidoCard>? _dropContainer;
 
     /* handling board events */
     private async Task TaskUpdated(MudItemDropInfo<PedidoCard> info)
@@ -80,13 +75,13 @@
         if (resultApi.IsSuccess && resultApi.Data != null && resultApi.Data.Any())
             _pedidos.AddRange(resultApi.Data);
 
-        _dropContainer.Refresh();
+        _dropContainer?.Refresh();
 
     }
 
     private void AddTask(PedidoKanbanSection section)
     {
         _pedidos.Add(new PedidoCard());
-        _dropContainer.Refresh();
+        _dropContainer?.Refresh();
     }
 }
