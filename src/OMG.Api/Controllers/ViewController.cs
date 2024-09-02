@@ -15,7 +15,7 @@ public class ViewController(OMGDbContext context) : ControllerBase
     public async Task<IActionResult> GetPedidoCardList() =>
        Ok((await _context.Pedidos.Where(x => x.Status != Domain.Enum.EPedidoStatus.Entregue)
         .Union(_context.Pedidos.Where(x =>
-            x.Status == Domain.Enum.EPedidoStatus.Entregue && x.DataEntrega <= DateOnly.FromDateTime(DateTime.Now).AddDays(-14)))
+            x.Status == Domain.Enum.EPedidoStatus.Entregue && x.DataEntrega >= DateOnly.FromDateTime(DateTime.Now).AddDays(-14)))
         .ToListAsync())
         .Select(x => x.ConvertToPedidoCard()));
 
