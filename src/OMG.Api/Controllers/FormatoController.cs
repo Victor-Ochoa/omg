@@ -18,6 +18,13 @@ public class FormatoController(OMGDbContext context) : ControllerBase
         return await _context.Formatos.ToListAsync();
     }
 
+    // GET: api/Formato/search/aaa
+    [HttpGet("search/{key}")]
+    public async Task<IActionResult> GetSearchFormatos(string key)
+    {
+        return Ok(await _context.Formatos.Where(x => x.Descricao.Contains(key)).ToListAsync());
+    }
+
     // GET: api/Formato/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Formato>> GetFormato(int id)

@@ -18,6 +18,13 @@ public class ProdutoController(OMGDbContext context) : ControllerBase
         return await _context.Produtos.ToListAsync();
     }
 
+    // GET: api/Produto/search/aaa
+    [HttpGet("search/{key}")]
+    public async Task<IActionResult> GetSearchProdutos(string key)
+    {
+        return Ok(await _context.Produtos.Where(x => x.Descricao.Contains(key)).ToListAsync());
+    }
+
     // GET: api/Produto/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Produto>> GetProduto(int id)

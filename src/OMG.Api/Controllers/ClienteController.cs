@@ -18,6 +18,13 @@ public class ClienteController(OMGDbContext context) : ControllerBase
         return await _context.Clientes.ToListAsync();
     }
 
+    // GET: api/Cliente/search/aaa
+    [HttpGet("search/{key}")]
+    public async Task<IActionResult> GetSearchClientes(string key)
+    {
+        return Ok(await _context.Clientes.Where(x => x.Nome.Contains(key)).ToListAsync());
+    }
+
     // GET: api/Cliente/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Cliente>> GetCliente(int id)

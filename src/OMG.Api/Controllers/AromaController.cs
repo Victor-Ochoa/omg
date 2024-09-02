@@ -18,6 +18,13 @@ public class AromaController(OMGDbContext context) : ControllerBase
         return await _context.Aromas.ToListAsync();
     }
 
+    // GET: api/Aroma/search/aaa
+    [HttpGet("search/{key}")]
+    public async Task<IActionResult> GetSearchAromas(string key)
+    {
+        return Ok(await _context.Aromas.Where(x => x.Nome.Contains(key)).ToListAsync());
+    }
+
     // GET: api/Aroma/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Aroma>> GetAroma(int id)

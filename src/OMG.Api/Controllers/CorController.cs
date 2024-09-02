@@ -18,6 +18,13 @@ public class CorController(OMGDbContext context) : ControllerBase
         return await _context.Cores.ToListAsync();
     }
 
+    // GET: api/Cor/search/aaa
+    [HttpGet("search/{key}")]
+    public async Task<IActionResult> GetSearchCores(string key)
+    {
+        return Ok(await _context.Cores.Where(x => x.Nome.Contains(key)).ToListAsync());
+    }
+
     // GET: api/Cor/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Cor>> GetCor(int id)
