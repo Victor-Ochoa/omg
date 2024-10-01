@@ -8,6 +8,6 @@ public class PedidoCard
     public string NomeCliente { get; set; } = string.Empty;
     public int TotalItens { get; set; }
     public DateOnly DataEntrega { get; set; }= new DateOnly();
-    public float ValorTotal { get; set; }
+    public decimal ValorTotal { get; set; }
     public EPedidoStatus Status { get; set; }
 }

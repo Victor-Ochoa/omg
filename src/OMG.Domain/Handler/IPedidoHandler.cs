@@ -9,4 +9,5 @@ public interface IPedidoHandler
     Task<Response<IEnumerable<PedidoCard>>> GetPedidoCardList();
     Task<Response<PedidoModal>> GetPedidoModal(int Id);
     Task<Response> ChangeStatus(PedidoChangeStatusRequest request);
+    Task<Response> NewPedido(NewPedidoRequest request);
 }

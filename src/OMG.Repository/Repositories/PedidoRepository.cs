@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OMG.Domain.Contracts.Repository;
+using OMG.Domain.Entities;
 using OMG.Domain.Enum;
 
 namespace OMG.Repository.Repositories;
 
-public class PedidoRepository(OMGDbContext context) : IPedidoRepository
+internal class PedidoRepository(OMGDbContext context) : IPedidoRepository
 {
     private readonly OMGDbContext _context = context;
 
@@ -15,6 +16,13 @@ public class PedidoRepository(OMGDbContext context) : IPedidoRepository
         pedido.Status = newStatus;
 
         _context.Entry(pedido).State = EntityState.Modified;
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task Create(Pedido pedido)
+    {
+        await _context.Pedidos.AddAsync(pedido);
 
         await _context.SaveChangesAsync();
     }

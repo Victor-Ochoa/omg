@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OMG.Domain.Contracts.Service;
+using OMG.Domain.Entities;
 using OMG.Domain.Request;
 using OMG.Repository;
 
@@ -27,8 +28,30 @@ public class PedidoController(OMGDbContext context, IPedidoService pedidoService
     }
 
 
+    // GET: api/Pedido/5
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Pedido>> GetPedido(int id)
+    {
+        var pedido = await _context.Pedidos.FindAsync(id);
+
+        if (pedido == null)
+        {
+            return NotFound();
+        }
+
+        return pedido;
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> NewPedido([FromBody] NewPedidoRequest newPedidoRequest)
+    {
+        var pedido = _pedidoService.CreateNewPedido(newPedidoRequest);
+
+        return CreatedAtAction("GetPedido", new { id = pedido.Id }, pedido);
+    }
+
     private async Task<bool> PedidoExists(int id)
     {
-        return await _context.Produtos.AnyAsync(e => e.Id == id);
+        return await _context.Pedidos.AnyAsync(e => e.Id == id);
     }
 }

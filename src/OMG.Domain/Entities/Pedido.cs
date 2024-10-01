@@ -11,9 +11,9 @@ public class Pedido : Entity
 
     public virtual required IList<PedidoItem> PedidoItens { get; set; }
 
-    public virtual float ValorTotal { get; set; } = 0f;
-    public virtual float Desconto { get; set; } = 0f;
-    public virtual float Entrada { get; set; } = 0f;
+    public virtual decimal ValorTotal { get; set; } = 0m;
+    public virtual decimal Desconto { get; set; } = 0m;
+    public virtual decimal Entrada { get; set; } = 0m;
     public virtual bool IsPermuta { get; set; } = false;
     public virtual DateOnly DataEntrega { get; set; } = new DateOnly();
 }

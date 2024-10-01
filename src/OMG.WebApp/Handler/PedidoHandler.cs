@@ -40,4 +40,14 @@ public class PedidoHandler(IHttpClientFactory httpClientFactory) : IPedidoHandle
 
         return new Response<PedidoModal>(code: (int)response.StatusCode, message: await response.Content.ReadAsStringAsync());
     }
+
+    public async Task<Response> NewPedido(NewPedidoRequest request)
+    {
+        var response = await _client.PostAsJsonAsync($"api/Pedido", request);
+
+        if (response.IsSuccessStatusCode)
+            return new Response(code: (int)response.StatusCode);
+
+        return new Response(code: (int)response.StatusCode, message: await response.Content.ReadAsStringAsync());
+    }
 }

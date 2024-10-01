@@ -7,9 +7,9 @@ public class PedidoModal
     public string ClienteTelefone { get; set; } = string.Empty;
     public string ClienteEndereco { get; set; } = string.Empty;
     public IEnumerable<PedidoItemModal> PedidoItens { get; set; } = Array.Empty<PedidoItemModal>();
-    public float ValorTotal { get; set; }
-    public float ValorPago { get; set; }
-    public float ValorReceber { get; set; }
+    public decimal ValorTotal { get; set; }
+    public decimal ValorPago { get; set; }
+    public decimal ValorReceber { get; set; }
     public bool Permuta { get; set; } = false;
     public DateOnly DataEntrega { get; set; }
 }

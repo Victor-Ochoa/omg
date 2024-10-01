@@ -29,8 +29,8 @@ private async Task OpenPedidoModalAsync()
 var resultApi = await _pedidoHandler.GetPedidoModal(1);
 if (resultApi.IsSuccess && resultApi.Data != null)
 {
-    var parameters = new DialogParameters<PedidoModalView> { { x => x._pedidoModal, resultApi.Data }};
-    var dialog = await DialogService.ShowAsync<PedidoModalView>("Pedido", parameters);
+var parameters = new DialogParameters<PedidoModalView> { { x => x._pedidoModal, resultApi.Data }};
+var dialog = await DialogService.ShowAsync<PedidoModalView>("Pedido", parameters);
 }
 
 }
