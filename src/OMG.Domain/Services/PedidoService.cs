@@ -52,4 +52,6 @@ internal class PedidoService(IPedidoRepository pedidoRepository, IEventRepositor
 
         return newPedido;
     }
+
+
 }

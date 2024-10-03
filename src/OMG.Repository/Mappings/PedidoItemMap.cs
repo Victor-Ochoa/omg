@@ -18,5 +18,9 @@ public class PedidoItemMap : IEntityTypeConfiguration<PedidoItem>
 
         builder.Property(x => x.Quantidade);
 
+        builder.HasQueryFilter(x => !x.IsDeleted);
+        builder.HasIndex(i => i.IsDeleted)
+            .HasFilter("IsDeleted = 0");
+
     }
 }

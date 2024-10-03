@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OMG.Repository;
 
@@ -11,9 +12,11 @@ using OMG.Repository;
 namespace OMG.Repository.Migrations
 {
     [DbContext(typeof(OMGDbContext))]
-    partial class OMGDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241002001927_AddSoftDelete")]
+    partial class AddSoftDelete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -170,14 +173,12 @@ namespace OMG.Repository.Migrations
 
                     b.Property<decimal>("Desconto")
                         .ValueGeneratedOnAdd()
-                        .HasPrecision(9, 2)
-                        .HasColumnType("decimal(9,2)")
+                        .HasColumnType("decimal(18,2)")
                         .HasDefaultValue(0m);
 
                     b.Property<decimal>("Entrada")
                         .ValueGeneratedOnAdd()
-                        .HasPrecision(9, 2)
-                        .HasColumnType("decimal(9,2)")
+                        .HasColumnType("decimal(18,2)")
                         .HasDefaultValue(0m);
 
                     b.Property<bool>("IsDeleted")
@@ -193,8 +194,7 @@ namespace OMG.Repository.Migrations
 
                     b.Property<decimal>("ValorTotal")
                         .ValueGeneratedOnAdd()
-                        .HasPrecision(9, 2)
-                        .HasColumnType("decimal(9,2)")
+                        .HasColumnType("decimal(18,2)")
                         .HasDefaultValue(0m);
 
                     b.HasKey("Id");

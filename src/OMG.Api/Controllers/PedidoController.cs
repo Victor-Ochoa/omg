@@ -1,24 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using OMG.Domain.Base.Contract;
 using OMG.Domain.Contracts.Service;
 using OMG.Domain.Entities;
 using OMG.Domain.Request;
-using OMG.Repository;
 
 namespace OMG.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PedidoController(OMGDbContext context, IPedidoService pedidoService) : ControllerBase
+public class PedidoController(IRepositoryEntity<Pedido> repository, IPedidoService pedidoService) : ControllerBase
 {
-
-    private readonly OMGDbContext _context = context;
+    private readonly IRepositoryEntity<Pedido> _repository = repository;
     private readonly IPedidoService _pedidoService = pedidoService;
 
     [HttpPut("ChangeStatus")]
     public async Task<IActionResult> ChangeStatus([FromBody] PedidoChangeStatusRequest request)
     {
-        if (!await PedidoExists(request.idPedido))
+        if (!await _repository.Exist(request.idPedido))
         {
             return NotFound();
         }
@@ -32,7 +30,7 @@ public class PedidoController(OMGDbContext context, IPedidoService pedidoService
     [HttpGet("{id}")]
     public async Task<ActionResult<Pedido>> GetPedido(int id)
     {
-        var pedido = await _context.Pedidos.FindAsync(id);
+        var pedido = await _repository.Get(id);
 
         if (pedido == null)
         {
@@ -48,10 +46,5 @@ public class PedidoController(OMGDbContext context, IPedidoService pedidoService
         var pedido = _pedidoService.CreateNewPedido(newPedidoRequest);
 
         return CreatedAtAction("GetPedido", new { id = pedido.Id }, pedido);
-    }
-
-    private async Task<bool> PedidoExists(int id)
-    {
-        return await _context.Pedidos.AnyAsync(e => e.Id == id);
     }
 }

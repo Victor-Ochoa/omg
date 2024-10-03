@@ -15,5 +15,9 @@ public class ClienteMap : IEntityTypeConfiguration<Cliente>
         builder.Property(x => x.Endereco).HasMaxLength(300);
 
         builder.HasIndex(x => x.Nome);
+
+        builder.HasQueryFilter(x => !x.IsDeleted);
+        builder.HasIndex(i => i.IsDeleted)
+            .HasFilter("IsDeleted = 0");
     }
 }

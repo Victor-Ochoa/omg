@@ -13,5 +13,9 @@ public class AromaMap : IEntityTypeConfiguration<Aroma>
         builder.Property(x => x.Nome).HasMaxLength(250).IsRequired();
 
         builder.HasIndex(i => i.Nome);
+
+        builder.HasQueryFilter(x => !x.IsDeleted);
+        builder.HasIndex(i => i.IsDeleted)
+            .HasFilter("IsDeleted = 0");
     }
 }

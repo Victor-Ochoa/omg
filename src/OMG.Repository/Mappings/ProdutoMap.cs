@@ -13,5 +13,9 @@ public class ProdutoMap : IEntityTypeConfiguration<Produto>
         builder.Property(x => x.Descricao).HasMaxLength(250).IsRequired();
 
         builder.HasIndex(i => i.Descricao);
+
+        builder.HasQueryFilter(x => !x.IsDeleted);
+        builder.HasIndex(i => i.IsDeleted)
+            .HasFilter("IsDeleted = 0");
     }
 }

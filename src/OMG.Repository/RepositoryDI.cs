@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using OMG.Domain.Base.Contract;
 using OMG.Domain.Contracts.Repository;
 using OMG.Repository.Repositories;
 
@@ -25,6 +26,8 @@ public static class RepositoryDI
         services.AddTransient<ICorRepository, CorRepository>();
         services.AddTransient<IFormatoRepository, FormatoRepository>();
         services.AddTransient<IProdutoRepository, ProdutoRepository>();
+
+        services.AddTransient(typeof(IRepositoryEntity<>), typeof(EntityRepository<>));
 
         return services;
     }
