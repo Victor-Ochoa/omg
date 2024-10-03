@@ -1,42 +1,39 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OMG.Domain.Base.Contract;
 using OMG.Domain.Contracts.Repository;
 using OMG.Domain.Entities;
 using OMG.Domain.Enum;
 
 namespace OMG.Repository.Repositories;
 
-internal class PedidoRepository(OMGDbContext context) : IPedidoRepository
+internal class PedidoRepository(OMGDbContext context, IRepositoryEntity<Pedido> repository) : IPedidoRepository
 {
     private readonly OMGDbContext _context = context;
+    private readonly IRepositoryEntity<Pedido> _repository = repository;
 
     public async Task ChangePedidoStatus(int id, EPedidoStatus newStatus)
     {
-        var pedido = await _context.Pedidos.FindAsync(id) ?? throw new Exception($"Pedido ({id}) não encontrado");
+        if (!await _repository.Exist(id)) throw new Exception($"Pedido ({id}) não encontrado");
+
+        var pedido = await _repository.Get(id);
 
         pedido.Status = newStatus;
 
-        _context.Entry(pedido).State = EntityState.Modified;
-
-        await _context.SaveChangesAsync();
+        await _repository.Update(pedido);
     }
 
-    public async Task Create(Pedido pedido)
-    {
-        await _context.Pedidos.AddAsync(pedido);
-
-        await _context.SaveChangesAsync();
-    }
+    public async Task Create(Pedido pedido) => await _repository.Create(pedido);
 
     public async Task<EPedidoStatus> GetPedidoStatus(int id)
     {
-        var pedido = await _context.Pedidos.FindAsync(id) ?? throw new Exception($"Pedido ({id}) não encontrado");
+        if (!await _repository.Exist(id)) throw new Exception($"Pedido ({id}) não encontrado");
 
-        return pedido.Status;
+        return (await _repository.Get(id)).Status;
     }
 
 
     public async Task<IList<Pedido>> GetPedidosViewHome(int diasExcluirProntos = 14) => await PedidoViewHomeQuery(diasExcluirProntos).ToListAsync();
-    private IQueryable<Pedido> PedidoViewHomeQuery(int diasExcluirProntos = 14) 
+    private IQueryable<Pedido> PedidoViewHomeQuery(int diasExcluirProntos = 14)
         => _context.Pedidos.Where(x => x.Status != EPedidoStatus.Entregue)
                            .Union(_context.Pedidos.Where(x =>
                             x.Status == EPedidoStatus.Entregue && x.DataEntrega >= DateOnly.FromDateTime(DateTime.Now).AddDays(-diasExcluirProntos)));

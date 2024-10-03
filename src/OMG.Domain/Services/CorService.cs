@@ -1,17 +1,17 @@
-﻿using OMG.Domain.Contracts.Repository;
+﻿using OMG.Domain.Base.Contract;
 using OMG.Domain.Contracts.Service;
 using OMG.Domain.Entities;
 
 namespace OMG.Domain.Services;
 
-internal class CorService(ICorRepository repository) : ICorService
+internal class CorService(IRepositoryEntity<Cor> repository) : ICorService
 {
-    private readonly ICorRepository _corRepository = repository;
+    private readonly IRepositoryEntity<Cor> _corRepository = repository;
     public async Task<Cor> GetFromName(string nome)
     {
-        var cor = await _corRepository.GetFromNome(nome);
+        var cor = await _corRepository.Get(x => x.Nome.Equals(nome, StringComparison.InvariantCultureIgnoreCase));
 
-        if (cor == null) return await _corRepository.AddCor(nome);
+        if (cor == null) return await _corRepository.Create(new Cor { Nome = nome});
 
         return cor;
     }

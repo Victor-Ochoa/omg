@@ -21,11 +21,6 @@ public static class RepositoryDI
 
         services.AddTransient<IPedidoRepository, PedidoRepository>();
         services.AddTransient<IEventRepository, EventRepository>();
-        services.AddTransient<IAromaRepository, AromaRepository>();
-        services.AddTransient<IClienteRepository, ClienteRepository>();
-        services.AddTransient<ICorRepository, CorRepository>();
-        services.AddTransient<IFormatoRepository, FormatoRepository>();
-        services.AddTransient<IProdutoRepository, ProdutoRepository>();
 
         services.AddTransient(typeof(IRepositoryEntity<>), typeof(EntityRepository<>));
 
