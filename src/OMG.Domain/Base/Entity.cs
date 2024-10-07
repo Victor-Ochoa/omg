@@ -6,8 +6,6 @@ namespace OMG.Domain.Base;
 public abstract class Entity: ISoftDeletable
 {
     public virtual int Id { get; set; }
-    [JsonIgnore]
     public bool IsDeleted { get; set; } = false;
-    [JsonIgnore]
     public DateTime? DeletedAt { get; set; } = null;
 }

@@ -1,0 +1,47 @@
+﻿@using OMG.Domain.Handler
+
+@inject ISnackbar Snackbar
+@inject IClienteHandler _clienteHandler
+
+<MudDialog>
+    <DialogContent>
+        <MudTextField @bind-Value="Cliente.Nome" Label="Nome do Cliente" />
+        <MudTextField @bind-Value="Cliente.Telefone" Label="Telefone" />
+        <MudTextField @bind-Value="Cliente.Endereco" Label="Endereço" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Success" OnClick="Salvar">Salvar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public Cliente Cliente { get; set; } = new Cliente();
+
+    private void Cancel() => MudDialog.Cancel();
+
+    protected override void OnInitialized()
+    {
+        MudDialog.Options.MaxWidth = MaxWidth.Medium;
+        MudDialog.Options.BackdropClick = false;
+        MudDialog.Options.CloseButton = true;
+        MudDialog.SetOptions(MudDialog.Options);
+
+        base.OnInitialized();
+    }
+
+    async Task Salvar()
+    {
+        var response = await _clienteHandler.CreateOrUpdate(Cliente);
+
+        if (response.IsSuccess)
+            MudDialog.Close(DialogResult.Ok(response.Data));
+
+        Snackbar.Add(response.Message, Severity.Error);
+        MudDialog.Close(DialogResult.Cancel());
+    }
+}

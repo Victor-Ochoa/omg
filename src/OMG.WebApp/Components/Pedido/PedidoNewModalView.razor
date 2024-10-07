@@ -1,6 +1,8 @@
 ﻿@using OMG.Domain.Entities
 @using System.Globalization
+@using OMG.WebApp.Components.Cliente
 
+@inject IDialogService DialogService
 @inject ISnackbar _snackbar
 @inject IPedidoHandler _pedidoHandler
 @inject IBaseSearchHandler<Cliente> _searchClienteHandler
@@ -22,12 +24,12 @@
                 <MudText Typo="Typo.h6">Cliente</MudText>
             </MudItem>
             <MudItem xs="6">
-                <MudAutocomplete T="Cliente" Label="Nome" @bind-Value="ClienteModel" SearchFunc="@SearchCliente"
+                <MudAutocomplete T="Cliente" Label="Nome" @bind-Value="ClienteModel" SearchFunc="@SearchCliente" @ref="mudAutocompleteCliente"
                                  ResetValueOnEmptyText="true" ShowProgressIndicator="true" Clearable
                                  CoerceText="true" CoerceValue="true" ToStringFunc="@(e=> e==null?null : $"{e.Nome}")">
                     <BeforeItemsTemplate>
                         <div class="pa-2">
-                            <MudButton Color="Color.Primary">Adicionar Novo Cliente</MudButton>
+                            <MudButton Color="Color.Primary" OnClick="(() => OpenClienteModal(true))">Adicionar Novo Cliente</MudButton>
                         </div>
                     </BeforeItemsTemplate>
                 </MudAutocomplete>
@@ -39,7 +41,7 @@
                 <MudTextField @bind-Value="ClienteModel.Endereco" Label="Endereço" Variant="Variant.Filled" Disabled></MudTextField>
             </MudItem>
             <MudItem align-center xs="1">
-                <MudIconButton Icon="@Icons.Material.Filled.Edit" ButtonType="ButtonType.Button" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Large" Disabled="ClienteModel.Id == 0" />
+                <MudIconButton Icon="@Icons.Material.Filled.Edit" ButtonType="ButtonType.Button" Variant="Variant.Outlined" Color="Color.Primary" Size="Size.Large" Disabled="ClienteModel.Id == 0" OnClick="(() => OpenClienteModal())"/>
             </MudItem>
             <MudDivider DividerType="DividerType.FullWidth" />
             <MudItem xs="12">
@@ -106,6 +108,24 @@
         set { _cliente = value ?? new Cliente(); }
     }
 
+    MudAutocomplete<Cliente> mudAutocompleteCliente { get; set; }
+
+    private async Task OpenClienteModal(bool isNew = false)
+    {
+        await mudAutocompleteCliente.CloseMenuAsync();
+
+        if (isNew) ClienteModel = new Cliente();
+
+        var parameters = new DialogParameters<ClienteModalView> { { x => x.Cliente, ClienteModel } };
+        var dialog = await DialogService.ShowAsync<ClienteModalView>("Cliente", parameters);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            ClienteModel =(Cliente) result.Data;
+        }
+    }
+
     public NewPedidoRequest PedidoRequest = new NewPedidoRequest();
 
     private async Task<IEnumerable<Cliente>> SearchCliente(string value, CancellationToken token)
@@ -114,6 +134,7 @@
             return (await _searchClienteHandler.GetAll("Cliente"))?.Data ?? Array.Empty<Cliente>();
         return (await _searchClienteHandler.GetAll("Cliente", value))?.Data ?? Array.Empty<Cliente>();
     }
+
     private async void Salvar()
     {
         var response = await _pedidoHandler.NewPedido(PedidoRequest);

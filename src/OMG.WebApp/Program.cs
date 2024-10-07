@@ -24,6 +24,7 @@ public class Program
         Configuracao.BackendUrl = builder.Configuration.GetSection("Configuracao").GetValue<string>("BackendUrl") ?? string.Empty;
 
         builder.Services.AddTransient<IPedidoHandler, PedidoHandler>();
+        builder.Services.AddTransient<IClienteHandler, ClienteHandler>();
         builder.Services.AddTransient(typeof(IBaseSearchHandler<>), typeof(BaseSearchHandler<>));
 
         builder.Services.AddHttpClient(Configuracao.HttpClientNameOMGApi, opt =>
