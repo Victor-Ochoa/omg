@@ -43,7 +43,7 @@ public class PedidoController(IRepositoryEntity<Pedido> repository, IPedidoServi
     [HttpPost]
     public async Task<IActionResult> NewPedido([FromBody] NewPedidoRequest newPedidoRequest)
     {
-        var pedido = _pedidoService.CreateNewPedido(newPedidoRequest);
+        var pedido = await _pedidoService.CreateNewPedido(newPedidoRequest);
 
         return CreatedAtAction("GetPedido", new { id = pedido.Id }, pedido);
     }

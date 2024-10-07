@@ -10,7 +10,7 @@ public class PedidoMap : IEntityTypeConfiguration<Pedido>
     {
         builder.HasKey(x => x.Id);
 
-        builder.HasMany(x => x.PedidoItens).WithOne(x => x.Pedido);
+        builder.HasMany(x => x.PedidoItens).WithOne().HasForeignKey(x => x.PedidoId);
         builder.Property(x => x.Status).IsRequired();
         builder.HasOne(x => x.Cliente);
         builder.Property(x => x.DataEntrega).IsRequired();

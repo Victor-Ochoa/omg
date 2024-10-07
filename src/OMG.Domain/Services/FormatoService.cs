@@ -9,7 +9,7 @@ internal class FormatoService(IRepositoryEntity<Formato> repository) : IFormatoS
     private readonly IRepositoryEntity<Formato> _repository = repository;
     public async Task<Formato> GetFromDescricao(string descricao)
     {
-        var formato = await _repository.Get(x => x.Descricao.Equals(descricao, StringComparison.InvariantCultureIgnoreCase));
+        var formato = await _repository.Get(x => x.Descricao.ToLower().Trim() == descricao.ToLower().Trim());
 
         if (formato == null) return await _repository.Create(new Formato{ Descricao = descricao });
 

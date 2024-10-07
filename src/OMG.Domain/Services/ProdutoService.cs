@@ -9,7 +9,7 @@ internal class ProdutoService(IRepositoryEntity<Produto> repository) : IProdutoS
     private readonly IRepositoryEntity<Produto> _repository = repository;
     public async Task<Produto> GetFromDescricao(string descricao)
     {
-        var produto = await _repository.Get(x => x.Descricao.Equals(descricao, StringComparison.InvariantCultureIgnoreCase));
+        var produto = await _repository.Get(x => x.Descricao.ToLower().Trim() == descricao.ToLower().Trim());
 
         if (produto == null) return await _repository.Create(new Produto { Descricao = descricao });
 
