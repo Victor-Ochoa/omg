@@ -75,16 +75,19 @@
                 </MudDataGrid>
             </MudItem>
             <MudDivider DividerType="DividerType.FullWidth" />
-            <MudItem xs="3">
+            <MudItem xs="2">
+                <MudDatePicker @bind-Date="PedidoRequest.DataEntrega" Label="Data da entrega" />
+            </MudItem>
+            <MudItem xs="2">
                 <MudNumericField @bind-Value="PedidoRequest.ValorTotal" Label="Valor Total" Variant="Variant.Filled" Min="0M" Culture="_culture" Format="N2" HideSpinButtons="true" />
             </MudItem>
-            <MudItem xs="3">
+            <MudItem xs="2">
                 <MudNumericField @bind-Value="PedidoRequest.ValorDesconto" Label="Desconto" Variant="Variant.Filled" Min="0M" Culture="_culture" Format="N2" HideSpinButtons="true" />
             </MudItem>
-            <MudItem xs="3">
+            <MudItem xs="2">
                 <MudNumericField @bind-Value="PedidoRequest.ValorEntrada" Label="Entrada" Variant="Variant.Filled" Min="0M" Culture="_culture" Format="N2" HideSpinButtons="true" />
             </MudItem>
-            <MudItem xs="3">
+            <MudItem xs="2">
                 <MudCheckBox @bind-Value="PedidoRequest.IsPermuta">É Permuta</MudCheckBox>
             </MudItem>
         </MudGrid>
@@ -137,11 +140,18 @@
 
     private async void Salvar()
     {
+        PedidoRequest.ClienteId = ClienteModel.Id;
         var response = await _pedidoHandler.NewPedido(PedidoRequest);
 
         if (response.IsSuccess)
         {
-            _snackbar.Add("Novo Pedido Salvo", Severity.Success);
+            
+            MudDialog.Close(DialogResult.Ok(response.Data));
+        }
+        else
+        {
+
+            _snackbar.Add(response.Message, Severity.Error);
             MudDialog.Close();
         }
     }

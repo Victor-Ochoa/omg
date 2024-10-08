@@ -26,7 +26,7 @@ public required PedidoCard Item { get; set; }
 
 private async Task OpenPedidoModalAsync()
 {
-var resultApi = await _pedidoHandler.GetPedidoModal(1);
+var resultApi = await _pedidoHandler.GetPedidoModal(Item.PedidoId);
 if (resultApi.IsSuccess && resultApi.Data != null)
 {
 var parameters = new DialogParameters<PedidoModalView> { { x => x._pedidoModal, resultApi.Data }};

@@ -13,8 +13,8 @@ public static class PedidoMapper
         PedidoId = pedido.Id,
         Permuta = pedido.IsPermuta,
         ValorPago = pedido.Entrada,
-        ValorReceber = pedido.ValorTotal - pedido.Entrada,
-        ValorTotal = pedido.ValorTotal,
+        ValorReceber = pedido.IsPermuta ? 0 : pedido.ValorTotal - pedido.Entrada - pedido.Desconto,
+        ValorTotal = pedido.ValorTotal - pedido.Desconto,
         PedidoItens = pedido.PedidoItens.Select(x => x.ConvertToPedidoItemModal()),
         DataEntrega = pedido.DataEntrega
     };
@@ -25,7 +25,7 @@ public static class PedidoMapper
         Status = pedido.Status,
         NomeCliente = pedido.Cliente.Nome,
         TotalItens = pedido.PedidoItens.Sum(x => x.Quantidade),
-        ValorTotal = pedido.ValorTotal,
+        ValorTotal = pedido.ValorTotal - pedido.Desconto,
         DataEntrega = pedido.DataEntrega
 
     };

@@ -4,6 +4,8 @@ using OMG.Domain.ViewModels;
 using OMG.Domain;
 using System.Net.Http.Json;
 using OMG.Domain.Request;
+using OMG.Domain.Entities;
+using OMG.Domain.Mappers;
 
 namespace OMG.WebApp.Handler;
 
@@ -41,13 +43,13 @@ public class PedidoHandler(IHttpClientFactory httpClientFactory) : IPedidoHandle
         return new Response<PedidoModal>(code: (int)response.StatusCode, message: await response.Content.ReadAsStringAsync());
     }
 
-    public async Task<Response> NewPedido(NewPedidoRequest request)
+    public async Task<Response<PedidoCard>> NewPedido(NewPedidoRequest request)
     {
         var response = await _client.PostAsJsonAsync($"api/Pedido", request);
 
         if (response.IsSuccessStatusCode)
-            return new Response(code: (int)response.StatusCode);
+            return new Response<PedidoCard>(code: (int)response.StatusCode, data: (await response.Content.ReadFromJsonAsync<Pedido>()).ConvertToPedidoCard());
 
-        return new Response(code: (int)response.StatusCode, message: await response.Content.ReadAsStringAsync());
+        return new Response<PedidoCard>(code: (int)response.StatusCode, message: await response.Content.ReadAsStringAsync());
     }
 }

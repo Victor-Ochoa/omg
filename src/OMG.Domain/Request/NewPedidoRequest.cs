@@ -8,7 +8,7 @@ public class NewPedidoRequest
     public decimal ValorDesconto { get; set; } = 0M;
     public decimal ValorEntrada { get; set; } = 0M;
     public bool IsPermuta { get; set; } = false;
-    public DateTime DataEntrega { get; set; } = DateTime.Today.AddDays(1);
+    public DateTime? DataEntrega { get; set; } = DateTime.Today.AddDays(1);
 }
 
 public record NewPedidoItemRequest(int Quantidade, string Produto, string Formato, string Cor,string Aroma);

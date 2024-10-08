@@ -29,7 +29,7 @@ internal class PedidoService(IPedidoRepository pedidoRepository, IEventRepositor
     {
         var newPedido = new Pedido()
         {
-            DataEntrega = DateOnly.FromDateTime(newPedidoRequest.DataEntrega),
+            DataEntrega = DateOnly.FromDateTime(newPedidoRequest.DataEntrega.Value),
             Desconto = newPedidoRequest.ValorDesconto,
             IsPermuta = newPedidoRequest.IsPermuta,
             Entrada = newPedidoRequest.ValorEntrada,
