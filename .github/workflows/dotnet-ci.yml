@@ -1,0 +1,32 @@
+name: .NET CI
+
+on:
+  pull_request:
+    branches:
+      - main # Executa em pull requests para a branch main
+  push:
+    branches:
+      - main # Executa quando o código é mesclado na branch main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3 # Usar a versão mais recente para checkout
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3 # Atualize para a versão v3 do setup-dotnet
+      with:
+        dotnet-version: '8.x' # Usando a versão mais recente do .NET 8.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build the project
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Run tests
+      run: dotnet test --configuration Release --no-build

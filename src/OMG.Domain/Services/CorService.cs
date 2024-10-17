@@ -4,7 +4,7 @@ using OMG.Domain.Entities;
 
 namespace OMG.Domain.Services;
 
-internal class CorService(IRepositoryEntity<Cor> repository) : ICorService
+public class CorService(IRepositoryEntity<Cor> repository) : ICorService
 {
     private readonly IRepositoryEntity<Cor> _corRepository = repository;
     public async Task<Cor> GetFromName(string nome)

@@ -4,7 +4,7 @@ using OMG.Domain.Entities;
 
 namespace OMG.Domain.Services;
 
-internal class EmbalagemService(IRepositoryEntity<Embalagem> repository) : IEmbalagemService
+public class EmbalagemService(IRepositoryEntity<Embalagem> repository) : IEmbalagemService
 {
     private readonly IRepositoryEntity<Embalagem> _repository = repository;
     public async Task<Embalagem> GetFromDescricao(string descricao)
