@@ -11,6 +11,19 @@ namespace OMG.Domain.Test.Mappers
     public class PedidoMapperTests
     {
         [Fact]
+        public void ConvertToPedidoModal_ShouldReturnNull_WhenPedidoIsNull()
+        {
+            // Arrange
+            Pedido pedido = null;
+
+            // Act
+            var result = pedido.ConvertToPedidoModal();
+
+            // Assert
+            result.Should().BeNull(); // Verifica se o retorno é null
+        }
+
+        [Fact]
         public void ConvertToPedidoModal_Should_Map_Properties_Correctly()
         {
             // Arrange
@@ -111,5 +124,63 @@ namespace OMG.Domain.Test.Mappers
             result.ValorTotal.Should().Be(pedido.ValorTotal - pedido.Desconto);
             result.DataEntrega.Should().Be(pedido.DataEntrega);
         }
+        [Fact]
+        public void ConvertToPedidoModal_ShouldReturnCorrectModal_WhenIsPermutaIsTrue()
+        {
+            // Arrange
+            var pedido = new Pedido
+            {
+                Cliente = new Cliente { Endereco = "Rua A", Nome = "Cliente A", Telefone = "123456789" },
+                Id = 1,
+                IsPermuta = true, // Caso IsPermuta seja true
+                Entrada = 100m,
+                ValorTotal = 1000m,
+                Desconto = 50m,
+                PedidoItens = new List<PedidoItem>
+        {
+            new PedidoItem { Produto = new Produto { Descricao = "Produto A" }, Quantidade = 2, Aroma = new Aroma { Nome = "Aroma A" }, Cor = new Cor { Nome = "Cor A" }, Formato = new Formato { Descricao = "Formato A" }, Embalagem = new Embalagem { Descricao = "Embalagem A" } }
+        },
+                DataEntrega = DateOnly.FromDateTime(DateTime.Now),
+                Status = EPedidoStatus.Novo
+            };
+
+            // Act
+            var result = pedido.ConvertToPedidoModal();
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Permuta.Should().BeTrue();
+            result.ValorReceber.Should().Be(0); // Quando IsPermuta é true, ValorReceber deve ser 0
+        }
+
+        [Fact]
+        public void ConvertToPedidoModal_ShouldReturnCorrectModal_WhenIsPermutaIsFalse()
+        {
+            // Arrange
+            var pedido = new Pedido
+            {
+                Cliente = new Cliente { Endereco = "Rua A", Nome = "Cliente A", Telefone = "123456789" },
+                Id = 1,
+                IsPermuta = false, // Caso IsPermuta seja false
+                Entrada = 100m,
+                ValorTotal = 1000m,
+                Desconto = 50m,
+                PedidoItens = new List<PedidoItem>
+        {
+            new PedidoItem { Produto = new Produto { Descricao = "Produto A" }, Quantidade = 2, Aroma = new Aroma { Nome = "Aroma A" }, Cor = new Cor { Nome = "Cor A" }, Formato = new Formato { Descricao = "Formato A" }, Embalagem = new Embalagem { Descricao = "Embalagem A" } }
+        },
+                DataEntrega = DateOnly.FromDateTime(DateTime.Now),
+                Status = EPedidoStatus.Novo
+            };
+
+            // Act
+            var result = pedido.ConvertToPedidoModal();
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Permuta.Should().BeFalse();
+            result.ValorReceber.Should().Be(850m); // Quando IsPermuta é false, deve ser calculado
+        }
+
     }
 }
