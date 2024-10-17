@@ -4,7 +4,7 @@ using OMG.Domain.Entities;
 
 namespace OMG.Domain.Services;
 
-internal class AromaService(IRepositoryEntity<Aroma> repository) : IAromaService
+public class AromaService(IRepositoryEntity<Aroma> repository) : IAromaService
 {
     private readonly IRepositoryEntity<Aroma> _repository = repository;
     public async Task<Aroma> GetFromName(string nome)

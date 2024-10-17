@@ -4,7 +4,7 @@ using OMG.Domain.Entities;
 
 namespace OMG.Domain.Services;
 
-internal class ClienteService(IRepositoryEntity<Cliente> clienteRepository) : IClienteService
+public class ClienteService(IRepositoryEntity<Cliente> clienteRepository) : IClienteService
 {
     private readonly IRepositoryEntity<Cliente> repository = clienteRepository;
 
