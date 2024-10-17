@@ -10,6 +10,7 @@ public class PedidoItem : Entity
     public virtual required Formato Formato { get; set; }
     public virtual required Cor Cor { get; set; }
     public virtual required Aroma Aroma { get; set; }
+    public virtual required Embalagem Embalagem { get; set; }
 
     public virtual int Quantidade { get; set; }
 }
