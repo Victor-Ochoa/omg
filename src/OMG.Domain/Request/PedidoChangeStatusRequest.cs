@@ -2,4 +2,4 @@
 
 namespace OMG.Domain.Request;
 
-public record PedidoChangeStatusRequest (int idPedido, EPedidoStatus NewStatus);
+public record PedidoChangeStatusRequest(int idPedido, EPedidoStatus NewStatus);

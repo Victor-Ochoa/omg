@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
-using OMG.Domain.Handler;
 using OMG.Domain;
+using OMG.Domain.Handler;
 using OMG.WebApp.Handler;
 using System.Globalization;
 

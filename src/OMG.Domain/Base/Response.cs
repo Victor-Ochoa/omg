@@ -4,14 +4,14 @@ namespace OMG.Domain.Base;
 
 public class Response<TData> : Response
 {
-    public Response(TData? data = default, int code = 200, string message = ""): base(code, message)
+    public Response(TData? data = default, int code = 200, string message = "") : base(code, message)
     {
         Data = data;
         Code = code;
     }
 
     public TData? Data { get; set; }
-    
+
 }
 
 public class Response(int code = 200, string message = "")

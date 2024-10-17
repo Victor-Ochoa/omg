@@ -11,7 +11,7 @@ internal class FormatoService(IRepositoryEntity<Formato> repository) : IFormatoS
     {
         var formato = await _repository.Get(x => x.Descricao.ToLower().Trim() == descricao.ToLower().Trim());
 
-        if (formato == null) return await _repository.Create(new Formato{ Descricao = descricao });
+        if (formato == null) return await _repository.Create(new Formato { Descricao = descricao });
 
         return formato;
     }

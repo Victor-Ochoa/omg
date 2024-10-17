@@ -2,7 +2,7 @@
 
 namespace OMG.Domain.Entities;
 
-public  class Cor : Entity
+public class Cor : Entity
 {
     public virtual string Nome { get; set; } = string.Empty;
 }

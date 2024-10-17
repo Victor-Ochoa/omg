@@ -40,7 +40,8 @@ internal class PedidoService(IPedidoRepository pedidoRepository, IEventRepositor
         };
 
         foreach (var item in newPedidoRequest.Itens)
-            newPedido.PedidoItens.Add(new PedidoItem() { 
+            newPedido.PedidoItens.Add(new PedidoItem()
+            {
                 Quantidade = item.Quantidade,
                 Produto = await _produtoService.GetFromDescricao(item.Produto),
                 Aroma = await _aromaService.GetFromName(item.Aroma),

@@ -11,7 +11,7 @@ internal class CorService(IRepositoryEntity<Cor> repository) : ICorService
     {
         var cor = await _corRepository.Get(x => x.Nome.ToLower().Trim() == nome.ToLower().Trim());
 
-        if (cor == null) return await _corRepository.Create(new Cor { Nome = nome});
+        if (cor == null) return await _corRepository.Create(new Cor { Nome = nome });
 
         return cor;
     }

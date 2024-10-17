@@ -11,7 +11,7 @@ internal class AromaService(IRepositoryEntity<Aroma> repository) : IAromaService
     {
         var aroma = await _repository.Get(x => x.Nome.ToLower().Trim() == nome.ToLower().Trim());
 
-        if (aroma == null) return await _repository.Create(new Aroma { Nome = nome});
+        if (aroma == null) return await _repository.Create(new Aroma { Nome = nome });
 
         return aroma;
     }

@@ -1,7 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
-using OMG.Repository;
 using OMG.Domain;
+using OMG.Repository;
 
 namespace OMG.Api;
 

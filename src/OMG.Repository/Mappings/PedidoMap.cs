@@ -14,7 +14,7 @@ public class PedidoMap : IEntityTypeConfiguration<Pedido>
         builder.Property(x => x.Status).IsRequired();
         builder.HasOne(x => x.Cliente);
         builder.Property(x => x.DataEntrega).IsRequired();
-        builder.Property(x => x.Entrada).HasDefaultValue(0.0f).HasPrecision(9,2);
+        builder.Property(x => x.Entrada).HasDefaultValue(0.0f).HasPrecision(9, 2);
         builder.Property(x => x.ValorTotal).HasDefaultValue(0.0f).IsRequired().HasPrecision(9, 2);
         builder.Property(x => x.Desconto).HasDefaultValue(0.0f).HasPrecision(9, 2);
         builder.Property(x => x.IsPermuta).HasDefaultValue(false);

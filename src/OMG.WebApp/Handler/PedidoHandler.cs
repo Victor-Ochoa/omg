@@ -1,11 +1,11 @@
-﻿using OMG.Domain.Base;
-using OMG.Domain.Handler;
-using OMG.Domain.ViewModels;
-using OMG.Domain;
-using System.Net.Http.Json;
-using OMG.Domain.Request;
+﻿using OMG.Domain;
+using OMG.Domain.Base;
 using OMG.Domain.Entities;
+using OMG.Domain.Handler;
 using OMG.Domain.Mappers;
+using OMG.Domain.Request;
+using OMG.Domain.ViewModels;
+using System.Net.Http.Json;
 
 namespace OMG.WebApp.Handler;
 
@@ -15,7 +15,7 @@ public class PedidoHandler(IHttpClientFactory httpClientFactory) : IPedidoHandle
 
     public async Task<Response> ChangeStatus(PedidoChangeStatusRequest request)
     {
-        var response = await _client.PutAsJsonAsync($"api/Pedido/ChangeStatus",request);
+        var response = await _client.PutAsJsonAsync($"api/Pedido/ChangeStatus", request);
 
         if (response.IsSuccessStatusCode)
             return new Response(code: (int)response.StatusCode);
