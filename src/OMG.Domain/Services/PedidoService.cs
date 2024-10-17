@@ -6,7 +6,7 @@ using OMG.Domain.Request;
 
 namespace OMG.Domain.Services;
 
-internal class PedidoService(IPedidoRepository pedidoRepository, IEventRepository eventRepository, IClienteService clienteService, ICorService corService, IAromaService aromaService, IProdutoService produtoService, IFormatoService formatoService) : IPedidoService
+internal class PedidoService(IPedidoRepository pedidoRepository, IEventRepository eventRepository, IClienteService clienteService, ICorService corService, IAromaService aromaService, IProdutoService produtoService, IFormatoService formatoService, IEmbalagemService embalagemService) : IPedidoService
 {
     private readonly IPedidoRepository _pedidoRepository = pedidoRepository;
     private readonly IEventRepository _eventRepository = eventRepository;
@@ -15,6 +15,7 @@ internal class PedidoService(IPedidoRepository pedidoRepository, IEventRepositor
     private readonly IAromaService _aromaService = aromaService;
     private readonly IProdutoService _produtoService = produtoService;
     private readonly IFormatoService _formatoService = formatoService;
+    private readonly IEmbalagemService _embalagemService = embalagemService;
 
     public async Task ChangeStatus(int idPedido, EPedidoStatus newStatus)
     {
@@ -46,7 +47,8 @@ internal class PedidoService(IPedidoRepository pedidoRepository, IEventRepositor
                 Produto = await _produtoService.GetFromDescricao(item.Produto),
                 Aroma = await _aromaService.GetFromName(item.Aroma),
                 Cor = await _corService.GetFromName(item.Cor),
-                Formato = await _formatoService.GetFromDescricao(item.Formato)
+                Formato = await _formatoService.GetFromDescricao(item.Formato),
+                Embalagem = await _embalagemService.GetFromDescricao(item.Embalagem)
             });
 
         await _pedidoRepository.Create(newPedido);

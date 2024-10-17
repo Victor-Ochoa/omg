@@ -13,5 +13,6 @@ public static class PedidoItemMapper
         Produto = item.Produto.Descricao,
         Quantidade = item.Quantidade,
         Aroma = item.Aroma.Nome,
+        Embalagem = item.Embalagem.Descricao,
     };
 }

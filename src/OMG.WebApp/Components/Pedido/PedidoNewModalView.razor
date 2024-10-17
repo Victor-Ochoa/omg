@@ -10,6 +10,7 @@
 @inject IBaseSearchHandler<Formato> _searchFormatoHandler
 @inject IBaseSearchHandler<Aroma> _searchAromaHandler
 @inject IBaseSearchHandler<Cor> _searchCorHandler
+@inject IBaseSearchHandler<Embalagem> _searchEmbalagemHandler
 
 <MudDialog>
     <TitleContent>
@@ -54,6 +55,7 @@
                     <MudAutocomplete T="string" Label="Formato" @bind-Value="formatoValue" SearchFunc="@SearchFormato" ResetValueOnEmptyText="true" CoerceText="false" CoerceValue="true" Required />
                     <MudAutocomplete T="string" Label="Aroma" @bind-Value="aromaValue" SearchFunc="@SearchAroma" ResetValueOnEmptyText="true" CoerceText="false" CoerceValue="true" Required />
                     <MudAutocomplete T="string" Label="Cor" @bind-Value="corValue" SearchFunc="@SearchCor" ResetValueOnEmptyText="true" CoerceText="false" CoerceValue="true" Required />
+                    <MudAutocomplete T="string" Label="Embalagem" @bind-Value="embalagemValue" SearchFunc="@SearchEmbalagem" ResetValueOnEmptyText="true" CoerceText="false" CoerceValue="true" Required />
                     <MudIconButton Size="@Size.Large" OnClick="(()=> AddItem())" Icon="@Icons.Material.Filled.AddCircle" />
                 </MudForm>
             </MudItem>
@@ -66,6 +68,7 @@
                         <PropertyColumn Property="x => x.Formato" />
                         <PropertyColumn Property="x => x.Aroma" />
                         <PropertyColumn Property="x => x.Cor" />
+                        <PropertyColumn Property="x => x.Embalagem" />
                         <TemplateColumn CellClass="justify-end">
                             <EditTemplate>
                                 <MudIconButton Size="@Size.Medium" Icon="@Icons.Material.Filled.Delete" OnClick="(() => DeleteItem(context.Item))" />
@@ -178,7 +181,7 @@
         if (!formNewModel.IsValid)
             return;
 
-        PedidoRequest.Itens.Add(new NewPedidoItemRequest(quantidadeValue, produtoValue, formatoValue, corValue, aromaValue));
+        PedidoRequest.Itens.Add(new NewPedidoItemRequest(quantidadeValue, produtoValue, formatoValue, corValue, aromaValue, embalagemValue));
         resetItemValues();
     }
 
@@ -189,6 +192,7 @@
         formatoValue = string.Empty;
         corValue = string.Empty;
         aromaValue = string.Empty;
+        embalagemValue = string.Empty;
     }
 
     int quantidadeValue { get; set; } = 1;
@@ -223,6 +227,14 @@
         if (string.IsNullOrEmpty(value))
             return (await _searchCorHandler.GetAll("Cor"))?.Data?.Select(x => x.Nome) ?? Array.Empty<string>();
         return (await _searchCorHandler.GetAll("Cor", value))?.Data?.Select(x => x.Nome) ?? Array.Empty<string>();
+    }
+
+    string embalagemValue { get; set; } = string.Empty;
+    private async Task<IEnumerable<string>> SearchEmbalagem(string value, CancellationToken token)
+    {
+        if (string.IsNullOrEmpty(value))
+            return (await _searchEmbalagemHandler.GetAll("Embalagem"))?.Data?.Select(x => x.Descricao) ?? Array.Empty<string>();
+        return (await _searchEmbalagemHandler.GetAll("Embalagem", value))?.Data?.Select(x => x.Descricao) ?? Array.Empty<string>();
     }
 
 }

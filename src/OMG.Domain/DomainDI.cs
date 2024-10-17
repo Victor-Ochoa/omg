@@ -14,6 +14,7 @@ public static class DomainDI
         services.AddTransient<IProdutoService, ProdutoService>();
         services.AddTransient<IAromaService, AromaService>();
         services.AddTransient<IClienteService, ClienteService>();
+        services.AddTransient<IEmbalagemService, EmbalagemService>();
 
         return services;
     }

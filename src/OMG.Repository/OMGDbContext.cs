@@ -13,6 +13,7 @@ public class OMGDbContext : DbContext
     public DbSet<Cliente> Clientes { get; set; }
     public DbSet<Cor> Cores { get; set; }
     public DbSet<Formato> Formatos { get; set; }
+    public DbSet<Embalagem> Embalagens { get; set; }
     public DbSet<Pedido> Pedidos { get; set; }
     public DbSet<PedidoItem> PedidoItens { get; set; }
     public DbSet<Produto> Produtos { get; set; }

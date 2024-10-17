@@ -11,4 +11,4 @@ public class NewPedidoRequest
     public DateTime? DataEntrega { get; set; } = DateTime.Today.AddDays(1);
 }
 
-public record NewPedidoItemRequest(int Quantidade, string Produto, string Formato, string Cor, string Aroma);
+public record NewPedidoItemRequest(int Quantidade, string Produto, string Formato, string Cor, string Aroma, string Embalagem);
