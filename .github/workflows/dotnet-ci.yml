@@ -1,0 +1,38 @@
+name: .NET CI
+
+on:
+  pull_request:
+    branches:
+      - main # Executa em pull requests para a branch main
+  push:
+    branches:
+      - main # Executa quando o código é mesclado na branch main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '8.0.10' # Certifique-se de usar a versão correta do .NET
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build the project
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Run tests
+      run: dotnet test --configuration Release --no-build --collect:"XPlat Code Coverage"
+      
+    - name: Upload code coverage
+      uses: actions/upload-artifact@v2
+      with:
+        name: code-coverage
+        path: ./TestResults/*/coverage.cobertura.xml # Ajuste o caminho se necessário

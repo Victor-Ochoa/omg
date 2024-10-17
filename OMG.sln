@@ -26,6 +26,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OMG.WebApp", "src\OMG.WebAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMG.Domain.Test", "src\OMG.Domain.Test\OMG.Domain.Test.csproj", "{04813BE1-A0EC-415E-BD93-490F1A5E918E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{6E51A2FE-103F-4E91-8F74-CE6C73553FC6}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet-ci.yml = .github\workflows\dotnet-ci.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +67,7 @@ Global
 		{9C965896-601F-4353-AA02-37A03715908B} = {51A6889A-D062-450A-8446-75CCEE49AAF0}
 		{DA16F69F-16D4-4368-AD0E-5D3FE71CF370} = {081CEBFC-5BFF-498C-ADDD-6511FD72C128}
 		{04813BE1-A0EC-415E-BD93-490F1A5E918E} = {9F7B1477-C012-4243-831D-B68BEE919826}
+		{6E51A2FE-103F-4E91-8F74-CE6C73553FC6} = {4828BF35-A57A-4817-9829-2069C4793CC7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03632AD3-6FE2-4F62-9739-192A6E4E3195}
