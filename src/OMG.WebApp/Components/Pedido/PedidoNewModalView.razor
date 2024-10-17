@@ -178,7 +178,7 @@
         if (!formNewModel.IsValid)
             return;
 
-        PedidoRequest.Itens.Add(new NewPedidoItemRequest(quantidadeValue, produtoValue, formatoValue, corValue, aromaValue));
+        PedidoRequest.Itens.Add(new NewPedidoItemRequest(quantidadeValue, produtoValue, formatoValue, corValue, aromaValue, string.Empty));
         resetItemValues();
     }
 
