@@ -20,12 +20,15 @@ public class EntityRepository<IEntity>(OMGDbContext dbContext) : IRepositoryEnti
 
     public async Task<bool> Delete(int id)
     {
-        var result = await _dbContext.Set<IEntity>().Where(x => x.Id == id && !x.IsDeleted)
-            .ExecuteUpdateAsync(x =>
-            x.SetProperty(p => p.IsDeleted, true)
-            .SetProperty(p => p.DeletedAt, DateTime.Now));
+        var entity = await _dbContext.Set<IEntity>().FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+        if (entity == null) return false;
 
-        return result > 0;
+        entity.IsDeleted = true;
+        entity.DeletedAt = DateTime.Now;
+
+        await _dbContext.SaveChangesAsync();
+
+        return true;
     }
 
     public async Task<IEntity> Get(int id) => await _dbContext.Set<IEntity>().FindAsync(id);

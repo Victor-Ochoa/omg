@@ -7,7 +7,7 @@ using OMG.Domain.Queries;
 
 namespace OMG.Repository.Repositories;
 
-internal class PedidoRepository(OMGDbContext context, IRepositoryEntity<Pedido> repository) : IPedidoRepository
+public class PedidoRepository(OMGDbContext context, IRepositoryEntity<Pedido> repository) : IPedidoRepository
 {
     private readonly OMGDbContext _context = context;
     private readonly IRepositoryEntity<Pedido> _repository = repository;

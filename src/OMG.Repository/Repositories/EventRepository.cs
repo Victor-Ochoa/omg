@@ -4,7 +4,7 @@ using OMG.Domain.Events;
 
 namespace OMG.Repository.Repositories;
 
-internal class EventRepository(OMGDbContext context) : IEventRepository
+public class EventRepository(OMGDbContext context) : IEventRepository
 {
     private readonly OMGDbContext _context = context;
 
