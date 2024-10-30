@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMG.Repository.Test", "src\OMG.Repository.Test\OMG.Repository.Test.csproj", "{ACC081A6-4044-4D63-87C4-5C78C27F9A05}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OMG.Api.Test", "src\OMG.Api.Test\OMG.Api.Test.csproj", "{AA422A48-9442-499B-BDB2-9458037BACB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{ACC081A6-4044-4D63-87C4-5C78C27F9A05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACC081A6-4044-4D63-87C4-5C78C27F9A05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACC081A6-4044-4D63-87C4-5C78C27F9A05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA422A48-9442-499B-BDB2-9458037BACB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA422A48-9442-499B-BDB2-9458037BACB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA422A48-9442-499B-BDB2-9458037BACB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA422A48-9442-499B-BDB2-9458037BACB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{04813BE1-A0EC-415E-BD93-490F1A5E918E} = {9F7B1477-C012-4243-831D-B68BEE919826}
 		{6E51A2FE-103F-4E91-8F74-CE6C73553FC6} = {4828BF35-A57A-4817-9829-2069C4793CC7}
 		{ACC081A6-4044-4D63-87C4-5C78C27F9A05} = {51A6889A-D062-450A-8446-75CCEE49AAF0}
+		{AA422A48-9442-499B-BDB2-9458037BACB2} = {081CEBFC-5BFF-498C-ADDD-6511FD72C128}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03632AD3-6FE2-4F62-9739-192A6E4E3195}
