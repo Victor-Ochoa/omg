@@ -6,7 +6,7 @@ using OMG.Domain.Request;
 
 namespace OMG.Domain.Services;
 
-internal class PedidoService(IPedidoRepository pedidoRepository, IEventRepository eventRepository, IClienteService clienteService, ICorService corService, IAromaService aromaService, IProdutoService produtoService, IFormatoService formatoService, IEmbalagemService embalagemService) : IPedidoService
+public class PedidoService(IPedidoRepository pedidoRepository, IEventRepository eventRepository, IClienteService clienteService, ICorService corService, IAromaService aromaService, IProdutoService produtoService, IFormatoService formatoService, IEmbalagemService embalagemService) : IPedidoService
 {
     private readonly IPedidoRepository _pedidoRepository = pedidoRepository;
     private readonly IEventRepository _eventRepository = eventRepository;

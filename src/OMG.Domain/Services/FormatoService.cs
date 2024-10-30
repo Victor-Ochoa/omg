@@ -4,7 +4,7 @@ using OMG.Domain.Entities;
 
 namespace OMG.Domain.Services;
 
-internal class FormatoService(IRepositoryEntity<Formato> repository) : IFormatoService
+public class FormatoService(IRepositoryEntity<Formato> repository) : IFormatoService
 {
     private readonly IRepositoryEntity<Formato> _repository = repository;
     public async Task<Formato> GetFromDescricao(string descricao)
