@@ -7,7 +7,9 @@ namespace OMG.Repository;
 public class OMGDbContext : DbContext
 {
     public OMGDbContext(DbContextOptions options) : base(options)
-    { }
+    {
+        Database.Migrate();
+    }
 
     public DbSet<Aroma> Aromas { get; set; }
     public DbSet<Cliente> Clientes { get; set; }

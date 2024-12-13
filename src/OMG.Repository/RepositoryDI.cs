@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using OMG.Domain.Base.Contract;
 using OMG.Domain.Contracts.Repository;
 using OMG.Repository.Repositories;
@@ -8,22 +9,21 @@ namespace OMG.Repository;
 
 public static class RepositoryDI
 {
-    public static IServiceCollection AddOMGRepository(this IServiceCollection services, string connectionString)
+    public static IHostApplicationBuilder AddOMGRepository(this IHostApplicationBuilder builder)
     {
 
-        services.AddDbContext<OMGDbContext>(option =>
+        builder.AddSqlServerDbContext<OMGDbContext>("database", configureDbContextOptions: option =>
         {
             option.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
             option.UseLazyLoadingProxies();
-            option.UseSqlServer(connectionString);
         });
 
 
-        services.AddTransient<IPedidoRepository, PedidoRepository>();
-        services.AddTransient<IEventRepository, EventRepository>();
+        builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
+        builder.Services.AddTransient<IEventRepository, EventRepository>();
 
-        services.AddTransient(typeof(IRepositoryEntity<>), typeof(EntityRepository<>));
+        builder.Services.AddTransient(typeof(IRepositoryEntity<>), typeof(EntityRepository<>));
 
-        return services;
+        return builder;
     }
 }

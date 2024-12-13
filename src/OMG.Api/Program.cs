@@ -11,14 +11,14 @@ public class Program
     {
         var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         var builder = WebApplication.CreateBuilder(args);
-
+        builder.AddServiceDefaults();
         // Add services to the container.
 
         builder.Services.AddControllers();
 
         builder.Services.AddOMGServices();
 
-        builder.Services.AddOMGRepository(builder.Configuration.GetConnectionString("OMGdbConnection") ?? "");
+        builder.AddOMGRepository();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
@@ -36,6 +36,8 @@ public class Program
         });
 
         var app = builder.Build();
+
+        app.MapDefaultEndpoints();
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
