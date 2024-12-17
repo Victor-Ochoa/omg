@@ -1,25 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
-
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+    <UserSecretsId>9ccc8351-bb44-40b2-9bef-add891ab192c</UserSecretsId>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.10" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
-    <PackageReference Include="MudBlazor" Version="7.13.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.ServiceDiscovery" Version="9.0.0" />
+    <PackageReference Include="MudBlazor" Version="7.15.0" />
   </ItemGroup>
-
   <ItemGroup>
+    <ProjectReference Include="..\OMG.Aspire\OMG.ServiceDefaults\OMG.ServiceDefaults.csproj" />
     <ProjectReference Include="..\OMG.Domain\OMG.Domain.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
-  </ItemGroup>
-
 </Project>

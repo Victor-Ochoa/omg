@@ -20,7 +20,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3 # Atualize para a versão v3 do setup-dotnet
       with:
-        dotnet-version: '8.x' # Usando a versão mais recente do .NET 8.x
+        dotnet-version: '9.x' # Usando a versão mais recente do .NET 9.x
 
     - name: Restore dependencies
       run: dotnet restore

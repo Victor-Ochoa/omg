@@ -25,12 +25,20 @@ public class PedidoHandler(IHttpClientFactory httpClientFactory) : IPedidoHandle
 
     public async Task<Response<IEnumerable<PedidoCard>>> GetPedidoCardList()
     {
-        var response = await _client.GetAsync("api/View/Pedido/Card");
+        try
+        {
+            var response = await _client.GetAsync("api/View/Pedido/Card");
 
-        if (response.IsSuccessStatusCode)
-            return new Response<IEnumerable<PedidoCard>>(await response.Content.ReadFromJsonAsync<IEnumerable<PedidoCard>>(), (int)response.StatusCode);
+            if (response.IsSuccessStatusCode)
+                return new Response<IEnumerable<PedidoCard>>(await response.Content.ReadFromJsonAsync<IEnumerable<PedidoCard>>(), (int)response.StatusCode);
 
-        return new Response<IEnumerable<PedidoCard>>(code: (int)response.StatusCode, message: await response.Content.ReadAsStringAsync());
+            return new Response<IEnumerable<PedidoCard>>(code: (int)response.StatusCode, message: await response.Content.ReadAsStringAsync());
+        }
+        catch (Exception e)
+        {
+
+            throw;
+        }
     }
 
     public async Task<Response<PedidoModal>> GetPedidoModal(int Id)

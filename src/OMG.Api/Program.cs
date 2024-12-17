@@ -7,18 +7,18 @@ namespace OMG.Api;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         var builder = WebApplication.CreateBuilder(args);
-
+        builder.AddServiceDefaults();
         // Add services to the container.
 
         builder.Services.AddControllers();
 
         builder.Services.AddOMGServices();
 
-        builder.Services.AddOMGRepository(builder.Configuration.GetConnectionString("OMGdbConnection") ?? "");
+        builder.AddOMGRepository();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
@@ -37,11 +37,19 @@ public class Program
 
         var app = builder.Build();
 
+        app.MapDefaultEndpoints();
+
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
             app.UseSwaggerUI();
+
+            await using(var serviceScope = app.Services.CreateAsyncScope())
+            await using(var dbContext = serviceScope.ServiceProvider.GetRequiredService<DbContext>())
+            {
+                await dbContext.Database.EnsureCreatedAsync();
+            }
         }
 
         app.UseHttpsRedirection();
