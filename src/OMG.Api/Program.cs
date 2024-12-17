@@ -7,7 +7,7 @@ namespace OMG.Api;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async void Main(string[] args)
     {
         var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         var builder = WebApplication.CreateBuilder(args);
@@ -44,6 +44,12 @@ public class Program
         {
             app.UseSwagger();
             app.UseSwaggerUI();
+
+            await using(var serviceScope = app.Services.CreateAsyncScope())
+            await using(var dbContext = serviceScope.ServiceProvider.GetRequiredService<DbContext>())
+            {
+                await dbContext.Database.EnsureCreatedAsync();
+            }
         }
 
         app.UseHttpsRedirection();
