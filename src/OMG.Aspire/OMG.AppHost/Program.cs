@@ -1,8 +1,15 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var dbPassword = builder.AddParameter("password", secret: true);
-var sql = builder.AddSqlServer("sql-server-db-omg", dbPassword)
-                 .WithLifetime(ContainerLifetime.Persistent);
+//var dbPassword = builder.AddParameter("password", secret: true);
+//var sql = builder.AddSqlServer("sql-server-db-omg", dbPassword)
+//                 .WithLifetime(ContainerLifetime.Persistent);
+
+//var db = sql.AddDatabase("database", "OMGdb");
+
+var sql = builder.AddMySql("mysql-db-omg")
+                    
+                   .WithPhpMyAdmin()
+                   .WithLifetime(ContainerLifetime.Persistent);
 
 var db = sql.AddDatabase("database", "OMGdb");
 

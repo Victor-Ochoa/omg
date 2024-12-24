@@ -46,7 +46,7 @@ public class Program
             app.UseSwaggerUI();
 
             await using(var serviceScope = app.Services.CreateAsyncScope())
-            await using(var dbContext = serviceScope.ServiceProvider.GetRequiredService<DbContext>())
+            await using(var dbContext = serviceScope.ServiceProvider.GetRequiredService<OMGDbContext>())
             {
                 await dbContext.Database.EnsureCreatedAsync();
             }
