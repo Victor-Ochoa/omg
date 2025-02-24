@@ -44,12 +44,6 @@ public class Program
         {
             app.UseSwagger();
             app.UseSwaggerUI();
-
-            await using(var serviceScope = app.Services.CreateAsyncScope())
-            await using(var dbContext = serviceScope.ServiceProvider.GetRequiredService<OMGDbContext>())
-            {
-                await dbContext.Database.EnsureCreatedAsync();
-            }
         }
 
         app.UseHttpsRedirection();
