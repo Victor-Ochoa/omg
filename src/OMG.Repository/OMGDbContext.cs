@@ -24,5 +24,21 @@ public class OMGDbContext : DbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(OMGDbContext).Assembly);
     }
+    public async Task SeedData()
+    {
+        if (!await Clientes.AnyAsync())
+        {
+            var cliente = new Cliente
+            {
+                Nome = "Victor (Marido)",
+                Telefone = "53 98416-3953",
+                Endereco = "JK de Oliveira 2200 19B 201",
+                IsDeleted = false,
+                DeletedAt = null
+            };
 
+            await Clientes.AddAsync(cliente);
+            await SaveChangesAsync();
+        }
+    }
 }

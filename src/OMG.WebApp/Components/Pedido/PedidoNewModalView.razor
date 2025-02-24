@@ -102,7 +102,7 @@
 
 @code {
     [CascadingParameter]
-    private MudDialogInstance MudDialog { get; set; }
+    private IMudDialogInstance MudDialog { get; set; }
 
     CultureInfo _culture = CultureInfo.GetCultureInfo("pt-BR");
 
@@ -161,11 +161,13 @@
 
     protected override void OnInitialized()
     {
-        MudDialog.Options.FullWidth = true;
-        MudDialog.Options.MaxWidth = MaxWidth.ExtraLarge;
-        MudDialog.Options.BackdropClick = false;
-        MudDialog.Options.CloseButton = true;
-        MudDialog.SetOptions(MudDialog.Options);
+		MudDialog.SetOptionsAsync(MudDialog.Options with
+			{
+				FullWidth = true,
+				MaxWidth = MaxWidth.ExtraLarge,
+				BackdropClick = false,
+				CloseButton = true,
+			});
 
         base.OnInitialized();
     }
