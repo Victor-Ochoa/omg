@@ -11,7 +11,7 @@ namespace OMG.Api.Controllers
     {
         private readonly IRepositoryEntity<IEntity> _repository = repository;
         [HttpGet]
-        public async Task<ActionResult<IList<Aroma>>> GetEntities() => Ok(await _repository.GetAll());
+        public async Task<ActionResult<IList<IEntity>>> GetEntities() => Ok(await _repository.GetAll());
 
         [HttpGet("{id}")]
         public async Task<ActionResult<IEntity>> GetEntity(int id)
@@ -53,10 +53,10 @@ namespace OMG.Api.Controllers
             return NoContent();
         }
 
-        // POST: api/Aroma
+        // POST: api/Entity
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Aroma>> PostEntity(IEntity entity)
+        public async Task<ActionResult<IEntity>> PostEntity(IEntity entity)
         {
             if (entity == null)
                 return BadRequest();
@@ -66,7 +66,7 @@ namespace OMG.Api.Controllers
             return CreatedAtAction("GetEntity", new { id = entity.Id }, entity);
         }
 
-        // DELETE: api/Aroma/5
+        // DELETE: api/Entity/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEntity(int id)
         {

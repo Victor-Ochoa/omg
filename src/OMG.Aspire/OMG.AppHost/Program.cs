@@ -1,7 +1,6 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var dbPassword = builder.AddParameter("password", secret: true);
-var sql = builder.AddSqlServer("sql-server-db-omg", dbPassword)
+var sql = builder.AddSqlServer("sql-server-db-omg")
                  .WithLifetime(ContainerLifetime.Persistent);
 
 var db = sql.AddDatabase("database", "OMGdb");
